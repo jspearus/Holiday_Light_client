@@ -22,7 +22,7 @@ def send(msg):
 
 
 send("Hello World!")
-input()
-send("Hello Everyone!")
+smsg = input("enter msg: \n")
+send(smsg)
 input()
 send("Hello Jeff!")
