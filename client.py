@@ -22,7 +22,9 @@ def send(msg):
 
 
 send("Hello World!")
-smsg = input("enter msg: \n")
-send(smsg)
-input()
-send("Hello Jeff!")
+while True:
+    smsg = input("enter msg: \n")
+    if smsg == 'q':
+        break
+    send(smsg)
+send("Goodby Jeff!")
