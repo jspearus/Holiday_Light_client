@@ -29,5 +29,4 @@ while True:
         break
     send(smsg)
 
-send("Goodby Jeff!")
 send(DISCONNECT_MESSAGE)
