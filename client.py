@@ -38,7 +38,9 @@ SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
 SockThread.start()
 
-send("Ctrl")
+#todo EDIT NAME.TXT TO THE NAME OF DEVICE
+with open('name.txt') as f:
+    send(f.readline())
 
 #todo input hangs up the DataIn var to be displayed
 while True:
