@@ -40,7 +40,9 @@ SockThread.start()
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
 with open('name.txt') as f:
-    send(f.readline())
+    name = f.readline()
+    send(name)
+    print(f"Connected as: {name}")
 
 #todo input hangs up the DataIn var to be displayed
 while True:
