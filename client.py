@@ -1,5 +1,7 @@
 import socket
 import datetime
+import threading
+import time
 
 HEADER = 64
 PORT = 5000
@@ -10,6 +12,7 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
+DataIn = ''
 
 
 def send(msg):
@@ -19,14 +22,30 @@ def send(msg):
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message)
-    print(client.recv(2048).decode(FORMAT))
+    # print(client.recv(2048).decode(FORMAT))
 
 
-send("Hello World!")
+def SocketIn():
+    global DataIn
+    while True:
+        if client.recv(2048).decode(FORMAT) != '':
+            DataIn = client.recv(2048).decode(FORMAT)
+            print(DataIn)
+            DataIn = ''
+
+
+SockThread = threading.Thread(target=SocketIn, args=())
+SockThread.setDaemon(True)
+SockThread.start()
+
+send("Ctrl")
+
+#todo input hangs up the DataIn var to be displayed
 while True:
-    smsg = input("enter msg: \n")
+    # smsg = input("enter msg: \n")
+    smsg = ' '
+    time.sleep(.2)
     if smsg == 'q':
         break
     send(smsg)
-
 send(DISCONNECT_MESSAGE)
