@@ -1,6 +1,7 @@
 import socket
 import datetime
 import threading
+import sys
 import time
 
 HEADER = 64
@@ -28,15 +29,11 @@ def send(msg):
 def SocketIn():
     global DataIn
     while True:
-        if client.recv(2048).decode(FORMAT) != '':
+        if client.recv(2048).decode(FORMAT):
             DataIn = client.recv(2048).decode(FORMAT)
             print(DataIn)
             DataIn = ''
 
-
-SockThread = threading.Thread(target=SocketIn, args=())
-SockThread.setDaemon(True)
-SockThread.start()
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
 with open('name.txt') as f:
@@ -44,12 +41,13 @@ with open('name.txt') as f:
     send(name)
     print(f"Connected as: {name}")
 
-#todo input hangs up the DataIn var to be displayed
+SockThread = threading.Thread(target=SocketIn, args=())
+SockThread.setDaemon(True)
+SockThread.start()
+
 while True:
     # smsg = input("enter msg: \n")
-    smsg = ' '
+    smsg = '#'
     time.sleep(.2)
-    if smsg == 'q':
-        break
     send(smsg)
 send(DISCONNECT_MESSAGE)
