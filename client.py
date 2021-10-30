@@ -30,6 +30,7 @@ def send(msg):
 def SocketIn():
     global DataIn
     global connected
+    print('listening...')
     while connected:
         DataIn = client.recv(2048).decode(FORMAT)
         if not DataIn:
@@ -61,15 +62,13 @@ def useInput():
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
-inputThead = threading.Thread(target=useInput, args=())
-inputThead.setDaemon(True)
 SockThread.setDaemon(True)
 SockThread.start()
+inputThead = threading.Thread(target=useInput, args=())
+inputThead.setDaemon(True)
 inputThead.start()
 
-while True:
-    # smsg = input("enter msg: \n")
-    # smsg = '#'
-    time.sleep(.2)
-    # send(smsg)
-send(DISCONNECT_MESSAGE)
+
+while connected:
+    time.sleep(.5)
+
