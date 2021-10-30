@@ -14,6 +14,7 @@ ADDR = (SERVER, PORT)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
+connected = True
 
 
 def send(msg):
@@ -28,11 +29,14 @@ def send(msg):
 
 def SocketIn():
     global DataIn
-    while True:
-        if client.recv(2048).decode(FORMAT):
-            DataIn = client.recv(2048).decode(FORMAT)
-            print(DataIn)
-            DataIn = ''
+    global connected
+    while connected:
+        DataIn = client.recv(2048).decode(FORMAT)
+        if not DataIn:
+            break
+        print(DataIn)
+        DataIn = ''
+        time.sleep(.5)
 
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
@@ -47,7 +51,7 @@ SockThread.start()
 
 while True:
     # smsg = input("enter msg: \n")
-    smsg = '#'
+    # smsg = '#'
     time.sleep(.2)
-    send(smsg)
+    # send(smsg)
 send(DISCONNECT_MESSAGE)
