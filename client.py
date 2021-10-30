@@ -36,6 +36,7 @@ def SocketIn():
         if not DataIn:
             break
         print(DataIn)
+        print("enter msg (q to close): ")
         DataIn = ''
         time.sleep(.5)
 
@@ -73,4 +74,3 @@ while connected:
     # smsg = '#'
     time.sleep(.2)
     # send(smsg)
-
