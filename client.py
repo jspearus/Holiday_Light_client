@@ -30,11 +30,14 @@ def send(msg):
 def SocketIn():
     global DataIn
     global connected
+    print('listening...')
     while connected:
-        if client.recv(2048).decode(FORMAT):
-            DataIn = client.recv(2048).decode(FORMAT)
-            print(DataIn)
-            DataIn = ''
+        DataIn = client.recv(1024).decode(FORMAT)
+        if not DataIn:
+            break
+        print(DataIn)
+        DataIn = ''
+        time.sleep(.5)
 
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
@@ -59,11 +62,11 @@ def useInput():
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
-inputThead = threading.Thread(target=useInput, args=())
-inputThead.setDaemon(True)
 SockThread.setDaemon(True)
 SockThread.start()
-inputThead.start()
+# inputThead = threading.Thread(target=useInput, args=())
+# inputThead.setDaemon(True)
+# inputThead.start()
 
 while connected:
-    time.sleep(.2)
+    time.sleep(.5)
