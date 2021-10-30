@@ -45,9 +45,27 @@ with open('name.txt') as f:
     send(name)
     print(f"Connected as: {name}")
 
+
+def useInput():
+    global connected
+    while connected:
+        smsg = input("enter msg (q to close): ")
+        if smsg == 'q':
+            send(DISCONNECT_MESSAGE)
+            time.sleep(1)
+            connected = False
+        else:
+            send(smsg)
+            time.sleep(.3)
+            send(smsg)
+
+
 SockThread = threading.Thread(target=SocketIn, args=())
+inputThead = threading.Thread(target=useInput, args=())
+inputThead.setDaemon(True)
 SockThread.setDaemon(True)
 SockThread.start()
+inputThead.start()
 
 while True:
     # smsg = input("enter msg: \n")
