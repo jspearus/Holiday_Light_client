@@ -67,9 +67,9 @@ SockThread.setDaemon(True)
 SockThread.start()
 inputThead.start()
 
-while True:
+while connected:
     # smsg = input("enter msg: \n")
     # smsg = '#'
     time.sleep(.2)
     # send(smsg)
-send(DISCONNECT_MESSAGE)
+
