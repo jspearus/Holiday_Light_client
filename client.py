@@ -32,7 +32,7 @@ def SocketIn():
     global connected
     print('listening...')
     while connected:
-        DataIn = client.recv(1024).decode(FORMAT)
+        DataIn = client.recv(2048).decode(FORMAT)
         if not DataIn:
             break
         print(DataIn)
@@ -68,5 +68,7 @@ inputThead = threading.Thread(target=useInput, args=())
 inputThead.setDaemon(True)
 inputThead.start()
 
+
 while connected:
     time.sleep(.5)
+
