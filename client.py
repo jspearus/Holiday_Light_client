@@ -59,7 +59,6 @@ def useInput():
         else:
             send(smsg)
             time.sleep(.3)
-            send(smsg)
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
