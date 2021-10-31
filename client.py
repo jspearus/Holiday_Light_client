@@ -40,13 +40,26 @@ def SocketIn():
     #########################    COMMANDS ########################
         print("enter msg (q to close): ")
         if DataIn == 'play':
-            file = "/home/pi/Music/T02systemonline.wav"
+            file = "/home/pi/Videos/Grinch.mp4"
             os.system("vlc " + file)
 
         elif DataIn == 'snow':
             file = "/home/pi/Videos/snow.mp4"
             os.system("vlc " + file)
     #####################################################################
+
+        elif DataIn == 'Halloween':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
+        
+        elif DataIn == 'Thanksgiving':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
+        
+        elif DataIn == 'Christmas Day':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
+
+        elif DataIn == "New Year's Day":
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
+            
         DataIn = ''
         time.sleep(.5)
 
