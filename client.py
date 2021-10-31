@@ -9,7 +9,7 @@ HEADER = 64
 PORT = 5000
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "dgscore.ddns.net"
+SERVER = "holidayctrl.ddns.net"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
