@@ -46,6 +46,7 @@ with open('name.txt') as f:
     name = f.readline()
     send(name)
     print(f"Connected as: {name}")
+    send('site, devices')
 
 
 def useInput():
