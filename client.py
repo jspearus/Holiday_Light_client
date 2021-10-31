@@ -2,6 +2,7 @@ import socket
 import datetime
 import threading
 import sys
+import os
 import time
 
 HEADER = 64
@@ -36,7 +37,16 @@ def SocketIn():
         if not DataIn:
             break
         print(DataIn)
+    #########################    COMMANDS ########################
         print("enter msg (q to close): ")
+        if DataIn == 'play':
+            file = "/home/pi/Music/T02systemonline.wav"
+            os.system("vlc " + file)
+
+        elif DataIn == 'snow':
+            file = "/home/pi/Videos/snow.mp4"
+            os.system("vlc " + file)
+    #####################################################################
         DataIn = ''
         time.sleep(.5)
 
