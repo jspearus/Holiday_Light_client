@@ -4,6 +4,9 @@ import threading
 import sys
 import os
 import time
+import platform
+import serial
+from serial.serialutil import Timeout
 
 HEADER = 64
 PORT = 5000
@@ -16,6 +19,12 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
 connected = True
+
+if platform.system() == "Linux":
+    port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=3.0)
+elif platform.system() == "Windows":
+    port = serial.Serial("COM15", baudrate=115200, timeout=3.0)
+pass
 
 
 def send(msg):
@@ -32,6 +41,7 @@ def SocketIn():
     global DataIn
     global connected
     print('listening...')
+    print(platform.system())
     while connected:
         DataIn = client.recv(2048).decode(FORMAT)
         if not DataIn:
@@ -59,7 +69,17 @@ def SocketIn():
 
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
-            
+
+        elif DataIn == "test":
+            print(DataIn)
+            port.write(str.encode("0,1,0,0,150#"))
+            port.write(str.encode("0,2,0,0,150#"))
+            port.write(str.encode("0,3,0,0,150#"))
+            port.write(str.encode("0,4,0,0,150#"))
+            port.write(str.encode("show#"))
+            time.sleep(2)
+            port.write(str.encode("clear#"))
+            port.write(str.encode("show#"))   
         DataIn = ''
         time.sleep(.5)
 
