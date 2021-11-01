@@ -50,12 +50,29 @@ def SocketIn():
     #########################    COMMANDS ########################
         print("enter msg (q to close): ")
         if DataIn == 'play':
+            port.write(str.encode("0,1,0,150,0#"))
+            port.write(str.encode("0,2,0,150,0#"))
+            port.write(str.encode("0,3,0,150,0#"))
+            port.write(str.encode("0,4,0,150,0#"))
+            port.write(str.encode("show#"))
             file = "/home/pi/Videos/Grinch.mp4"
             os.system("vlc " + file)
+            time.sleep(2)
+            port.write(str.encode("clear#"))
+            port.write(str.encode("show#"))   
 
         elif DataIn == 'snow':
+            port.write(str.encode("0,1,150,150,150#"))
+            port.write(str.encode("0,2,150,150,150#"))
+            port.write(str.encode("0,3,150,150,150#"))
+            port.write(str.encode("0,4,150,150,150#"))
+            port.write(str.encode("show#"))
             file = "/home/pi/Videos/snow.mp4"
             os.system("vlc " + file)
+            time.sleep(2)
+            port.write(str.encode("clear#"))
+            port.write(str.encode("show#"))   
+
     #####################################################################
 
         elif DataIn == 'Halloween':
