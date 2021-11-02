@@ -2,6 +2,11 @@ import socket
 import datetime
 import threading
 import time
+import os
+
+import platform
+import serial
+from serial.serialutil import Timeout
 
 HEADER = 64
 PORT = 5000
@@ -13,6 +18,21 @@ ADDR = (SERVER, PORT)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
+
+if platform.system() == "Linux":
+    port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
+elif platform.system() == "Windows":
+    port = serial.Serial("COM15", baudrate=115200, timeout=3.0)
+    pass
+
+port.write(str.encode("0,1,0,0,150#"))
+port.write(str.encode("0,2,0,0,150#"))
+port.write(str.encode("0,3,0,0,150#"))
+port.write(str.encode("0,4,0,0,150#"))
+port.write(str.encode("show#"))
+time.sleep(2)
+port.write(str.encode("clear#"))
+port.write(str.encode("show#"))
 
 
 def send(msg):
@@ -38,7 +58,7 @@ SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
 SockThread.start()
 
-send("Ctrl")
+send("Light")
 
 #todo input hangs up the DataIn var to be displayed
 while True:
