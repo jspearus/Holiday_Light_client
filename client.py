@@ -1,6 +1,7 @@
 import socket
 import datetime
 import threading
+import sys
 import time
 import os
 
@@ -18,6 +19,7 @@ ADDR = (SERVER, PORT)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
+connected = True
 
 if platform.system() == "Linux":
     port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
@@ -47,25 +49,51 @@ def send(msg):
 
 def SocketIn():
     global DataIn
-    while True:
-        if client.recv(2048).decode(FORMAT) != '':
-            DataIn = client.recv(2048).decode(FORMAT)
-            print(DataIn)
-            DataIn = ''
+    global connected
+    print('listening...')
+    while connected:
+        DataIn = client.recv(2048).decode(FORMAT)
+        if not DataIn:
+            break
+        print(DataIn)
+        print("enter msg (q to close): ")
+        DataIn = ''
+        time.sleep(.5)
+
+
+#todo EDIT NAME.TXT TO THE NAME OF DEVICE
+with open('name.txt') as f:
+    name = f.readline()
+    send(name)
+    print(f"Connected as: {name}")
+    send('site, devices')
+
+
+def useInput():
+    global connected
+    while connected:
+        smsg = input("enter msg (q to close): ")
+        if smsg == 'q':
+            send(DISCONNECT_MESSAGE)
+            time.sleep(1)
+            connected = False
+        else:
+            send(smsg)
+            time.sleep(.3)
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
 SockThread.start()
+inputThead = threading.Thread(target=useInput, args=())
+inputThead.setDaemon(True)
+inputThead.start()
 
-send("Light")
+send(name)
 
 #todo input hangs up the DataIn var to be displayed
 while True:
     # smsg = input("enter msg: \n")
-    smsg = ' '
+    # smsg = '#'
     time.sleep(.2)
-    if smsg == 'q':
-        break
-    send(smsg)
-send(DISCONNECT_MESSAGE)
+    # send(smsg)
