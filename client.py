@@ -87,7 +87,7 @@ inputThead.start()
 send(name)
 
 #todo input hangs up the DataIn var to be displayed
-while True:
+while connected:
     # smsg = input("enter msg: \n")
     # smsg = '#'
     time.sleep(.2)
