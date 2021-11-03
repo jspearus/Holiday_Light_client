@@ -44,17 +44,18 @@ def SocketIn():
             break
         print(DataIn)
     #########################    COMMANDS ########################
-        print("enter msg (q to close): ")
 
         if DataIn == 'play':
             file = "/home/pi/Videos/Grinch.mp4"
             runGrinch()
-            os.system("vlc " + file)
+            os.system("omxplayer --aspect-mode fill " + file)
+            msg = True
             
         elif DataIn == 'snow':
             file = "/home/pi/Videos/snow.mp4"
             runSnow()
-            os.system("vlc " + file)
+            os.system("omxplayer --aspect-mode fill " + file)
+            msg = True
 
     #####################################################################
 
@@ -87,8 +88,13 @@ with open('name.txt') as f:
 
 def useInput():
     global connected
+    smsg = ''
     while connected:
-        smsg = input("enter msg (q to close): ")
+        try:
+            smsg = input("enter msg (q to close): ")
+        except EOFError as e:
+            time.sleep(2)
+            pass
         if smsg == 'q':
             send(DISCONNECT_MESSAGE)
             time.sleep(1)
