@@ -7,7 +7,7 @@ import time
 import platform
 from grinch import runGrinch
 from snow import runSnow
-from general import runTree
+from general import runTree, runtest1
 
 HEADER = 64
 PORT = 5000
@@ -73,7 +73,7 @@ def SocketIn():
 
         elif DataIn == "test":
             print(DataIn)
-            runTree()
+            runtest1()
         DataIn = ''
         time.sleep(.5)
 
