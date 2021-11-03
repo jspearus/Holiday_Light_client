@@ -21,20 +21,6 @@ client.connect(ADDR)
 DataIn = ''
 connected = True
 
-if platform.system() == "Linux":
-    port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
-elif platform.system() == "Windows":
-    port = serial.Serial("COM15", baudrate=115200, timeout=3.0)
-    pass
-
-port.write(str.encode("0,1,0,0,150#"))
-port.write(str.encode("0,2,0,0,150#"))
-port.write(str.encode("0,3,0,0,150#"))
-port.write(str.encode("0,4,0,0,150#"))
-port.write(str.encode("show#"))
-time.sleep(2)
-port.write(str.encode("clear#"))
-port.write(str.encode("show#"))
 
 
 def send(msg):
@@ -56,7 +42,25 @@ def SocketIn():
         if not DataIn:
             break
         print(DataIn)
-        print("enter msg (q to close): ")
+        ########################## CUSTOM COMANDS ###########################################
+
+        if DataIn == 'Halloween':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
+        
+        elif DataIn == 'Thanksgiving':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
+        
+        elif DataIn == 'Christmas Day':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
+
+        elif DataIn == "New Year's Day":
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
+        
+        ############################################################################
+
+        elif DataIn == "test":
+            print(DataIn)
+            runTree()
         DataIn = ''
         time.sleep(.5)
 
@@ -92,7 +96,7 @@ inputThead.start()
 send(name)
 
 #todo input hangs up the DataIn var to be displayed
-while True:
+while connected:
     # smsg = input("enter msg: \n")
     # smsg = '#'
     time.sleep(.2)
