@@ -2,6 +2,7 @@ import socket
 import datetime
 import threading
 import sys
+import os
 import time
 import os
 
@@ -13,7 +14,7 @@ HEADER = 64
 PORT = 5000
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "dgscore.ddns.net"
+SERVER = "holidayctrl.ddns.net"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,6 +38,7 @@ def SocketIn():
     global DataIn
     global connected
     print('listening...')
+    print(platform.system())
     while connected:
         DataIn = client.recv(2048).decode(FORMAT)
         if not DataIn:
@@ -75,8 +77,13 @@ with open('name.txt') as f:
 
 def useInput():
     global connected
+    smsg = ''
     while connected:
-        smsg = input("enter msg (q to close): ")
+        try:
+            smsg = input("enter msg (q to close): ")
+        except EOFError as e:
+            time.sleep(2)
+            pass
         if smsg == 'q':
             send(DISCONNECT_MESSAGE)
             time.sleep(1)
@@ -84,6 +91,8 @@ def useInput():
         else:
             send(smsg)
             time.sleep(.3)
+
+
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
