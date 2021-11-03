@@ -48,14 +48,14 @@ def SocketIn():
         if DataIn == 'play':
             file = "/home/pi/Videos/Grinch.mp4"
             runGrinch()
-            os.system("omxplayer --aspect-mode fill " + file)
-            msg = True
+            os.system("vlc  " + file)
+
             
         elif DataIn == 'snow':
             file = "/home/pi/Videos/snow.mp4"
             runSnow()
-            os.system("omxplayer --aspect-mode fill " + file)
-            msg = True
+            os.system("vlc  " + file)
+ 
 
     #####################################################################
 
