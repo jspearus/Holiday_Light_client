@@ -5,8 +5,9 @@ import sys
 import os
 import time
 import platform
-import serial
-from serial.serialutil import Timeout
+from grinch import runGrinch
+from snow import runSnow
+from general import runTree
 
 HEADER = 64
 PORT = 5000
@@ -20,11 +21,6 @@ client.connect(ADDR)
 DataIn = ''
 connected = True
 
-if platform.system() == "Linux":
-    port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=3.0)
-elif platform.system() == "Windows":
-    port = serial.Serial("COM15", baudrate=115200, timeout=3.0)
-pass
 
 
 def send(msg):
@@ -49,29 +45,16 @@ def SocketIn():
         print(DataIn)
     #########################    COMMANDS ########################
         print("enter msg (q to close): ")
-        if DataIn == 'play':
-            port.write(str.encode("0,1,0,150,0#"))
-            port.write(str.encode("0,2,0,150,0#"))
-            port.write(str.encode("0,3,0,150,0#"))
-            port.write(str.encode("0,4,0,150,0#"))
-            port.write(str.encode("show#"))
-            file = "/home/pi/Videos/Grinch.mp4"
-            os.system("vlc " + file)
-            time.sleep(2)
-            port.write(str.encode("clear#"))
-            port.write(str.encode("show#"))   
 
-        elif DataIn == 'snow':
-            port.write(str.encode("0,1,150,150,150#"))
-            port.write(str.encode("0,2,150,150,150#"))
-            port.write(str.encode("0,3,150,150,150#"))
-            port.write(str.encode("0,4,150,150,150#"))
-            port.write(str.encode("show#"))
-            file = "/home/pi/Videos/snow.mp4"
+        if DataIn == 'play':
+            file = "/home/pi/Videos/Grinch.mp4"
+            runGrinch()
             os.system("vlc " + file)
-            time.sleep(2)
-            port.write(str.encode("clear#"))
-            port.write(str.encode("show#"))   
+            
+        elif DataIn == 'snow':
+            file = "/home/pi/Videos/snow.mp4"
+            runSnow()
+            os.system("vlc " + file)
 
     #####################################################################
 
@@ -89,14 +72,7 @@ def SocketIn():
 
         elif DataIn == "test":
             print(DataIn)
-            port.write(str.encode("0,1,0,0,150#"))
-            port.write(str.encode("0,2,0,0,150#"))
-            port.write(str.encode("0,3,0,0,150#"))
-            port.write(str.encode("0,4,0,0,150#"))
-            port.write(str.encode("show#"))
-            time.sleep(2)
-            port.write(str.encode("clear#"))
-            port.write(str.encode("show#"))   
+            runTree()
         DataIn = ''
         time.sleep(.5)
 
@@ -120,6 +96,8 @@ def useInput():
         else:
             send(smsg)
             time.sleep(.3)
+
+
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
