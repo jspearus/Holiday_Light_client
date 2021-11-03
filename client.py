@@ -7,7 +7,7 @@ import time
 import platform
 from grinch import runGrinch
 from snow import runSnow
-from general import runTree
+from general import runTree, runtest1
 
 HEADER = 64
 PORT = 5000
@@ -49,12 +49,12 @@ def SocketIn():
         if DataIn == 'play':
             file = "/home/pi/Videos/Grinch.mp4"
             runGrinch()
-            os.system("vlc " + file)
+            # os.system("vlc " + file)
             
         elif DataIn == 'snow':
             file = "/home/pi/Videos/snow.mp4"
             runSnow()
-            os.system("vlc " + file)
+            # os.system("vlc " + file)
 
     #####################################################################
 
@@ -72,7 +72,7 @@ def SocketIn():
 
         elif DataIn == "test":
             print(DataIn)
-            runTree()
+            runtest1()
         DataIn = ''
         time.sleep(.5)
 

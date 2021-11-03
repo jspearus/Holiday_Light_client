@@ -45,8 +45,36 @@ def tree():
     port.write(str.encode("clear#"))
     port.write(str.encode("show#"))   
 
+def test1():
+    for i in range(65):
+        port.write(str.encode(f"0,{i},0,100,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.2)
+    time.sleep(2)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))   
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,0,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.2)
+    time.sleep(2)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))   
+    for i in range(65):
+        port.write(str.encode(f"0,{i},0,0,100#"))
+        port.write(str.encode("show#"))
+        time.sleep(.2)
+    time.sleep(2)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))   
+
+
 def runTree():
     tProc = Process(target=tree, args=())
+    tProc.start()
+
+def runtest1():
+    tProc = Process(target=test1, args=())
     tProc.start()
 
 
