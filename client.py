@@ -1,4 +1,4 @@
-#Remote branch
+#Remote_holiday branch
 import socket
 import datetime
 import threading
@@ -25,7 +25,6 @@ DataIn = ''
 connected = True
 
 
-
 def send(msg):
     message = msg.encode(FORMAT)
     msg_length = len(message)
@@ -49,17 +48,20 @@ def SocketIn():
         ########################## CUSTOM COMANDS ###########################################
 
         if DataIn == 'Halloween':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
-        
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
+
         elif DataIn == 'Thanksgiving':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
-        
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
+
         elif DataIn == 'Christmas Day':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
 
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
-        
+
         ############################################################################
 
         elif DataIn == "test":
@@ -94,8 +96,6 @@ def useInput():
         else:
             send(smsg)
             time.sleep(.3)
-
-
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
