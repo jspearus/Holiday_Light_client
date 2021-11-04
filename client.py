@@ -1,3 +1,4 @@
+#Master Branch
 import socket
 import datetime
 import threading
@@ -42,13 +43,16 @@ def SocketIn():
             break
         print(DataIn)
         if DataIn == 'Halloween':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
-        
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
+
         elif DataIn == 'Thanksgiving':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
-        
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
+
         elif DataIn == 'Christmas Day':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
 
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
