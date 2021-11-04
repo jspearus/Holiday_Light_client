@@ -1,3 +1,4 @@
+#Hoiday_controller Branch
 import socket
 import datetime
 import threading
@@ -22,7 +23,6 @@ DataIn = ''
 connected = True
 
 
-
 def send(msg):
     message = msg.encode(FORMAT)
     msg_length = len(message)
@@ -43,30 +43,31 @@ def SocketIn():
         if not DataIn:
             break
         print(DataIn)
-    #########################    COMMANDS ########################
+        #########################    COMMANDS ########################
 
         if DataIn == 'play':
             file = "/home/pi/Videos/Grinch.mp4"
             runGrinch()
             os.system("vlc  " + file)
 
-            
         elif DataIn == 'snow':
             file = "/home/pi/Videos/snow.mp4"
             runSnow()
             os.system("vlc  " + file)
- 
 
     #####################################################################
 
         elif DataIn == 'Halloween':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
-        
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
+
         elif DataIn == 'Thanksgiving':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
-        
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
+
         elif DataIn == 'Christmas Day':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
+            os.system(
+                "pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
 
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
@@ -103,8 +104,6 @@ def useInput():
         else:
             send(smsg)
             time.sleep(.3)
-
-
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
