@@ -87,6 +87,7 @@ def useInput():
             time.sleep(2)
             pass
         if smsg == 'q':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
             send(DISCONNECT_MESSAGE)
             time.sleep(1)
             connected = False
