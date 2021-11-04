@@ -69,6 +69,7 @@ def useInput():
     while connected:
         smsg = input("enter msg (q to close): ")
         if smsg == 'q':
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
             send(DISCONNECT_MESSAGE)
             time.sleep(1)
             connected = False
