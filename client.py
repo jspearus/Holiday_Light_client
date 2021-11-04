@@ -5,10 +5,11 @@ import sys
 import os
 import time
 import os
-
 import platform
 import serial
 from serial.serialutil import Timeout
+from general import runTree, runtest1
+from grinch import runGrinch
 
 HEADER = 64
 PORT = 5000
@@ -62,7 +63,7 @@ def SocketIn():
 
         elif DataIn == "test":
             print(DataIn)
-            runTree()
+            runtest1()
         DataIn = ''
         time.sleep(.5)
 
