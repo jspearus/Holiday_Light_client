@@ -97,10 +97,10 @@ inputThead.start()
 
 send(name)
 s.enter(5, 1, getDay(), argument=())
+s.run()
 #todo input hangs up the DataIn var to be displayed
 while connected:
     # smsg = input("enter msg: \n")
     # smsg = '#'
-    s.run()
     time.sleep(.2)
     # send(smsg)
