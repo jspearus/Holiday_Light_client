@@ -42,20 +42,6 @@ def SocketIn():
         if not DataIn:
             break
         print(DataIn)
-        if DataIn == 'Halloween':
-            os.system(
-                "pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
-
-        elif DataIn == 'Thanksgiving':
-            os.system(
-                "pcmanfm --set-wallpaper /home/pi/Pictures/thanksgiving.jpg")
-
-        elif DataIn == 'Christmas Day':
-            os.system(
-                "pcmanfm --set-wallpaper /home/pi/Pictures/christmas.jpg")
-
-        elif DataIn == "New Year's Day":
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
         DataIn = ''
         time.sleep(.5)
 
@@ -73,7 +59,6 @@ def useInput():
     while connected:
         smsg = input("enter msg (q to close): ")
         if smsg == 'q':
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
             send(DISCONNECT_MESSAGE)
             time.sleep(1)
             connected = False
