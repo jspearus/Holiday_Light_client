@@ -35,8 +35,9 @@ def send(msg):
 
 
 #todo update this fucntion every hour???
-def getDay():
+def getDay(sc):
     send(f"{name}, holiday")
+    s.enter(5, 1, getDay(), (sc, ))
 
 
 def SocketIn():
@@ -96,7 +97,7 @@ inputThead.setDaemon(True)
 inputThead.start()
 
 send(name)
-s.enter(time.time() + 1, 1, getDay(), argument=())
+s.enter(5, 1, getDay(), (s, ))
 s.run()
 #todo input hangs up the DataIn var to be displayed
 while connected:
