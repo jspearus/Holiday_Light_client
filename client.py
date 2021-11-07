@@ -36,7 +36,7 @@ def send(msg):
 
 #todo update this fucntion every hour???
 def getDay():
-    send(f"holiday")
+    send(f"{name}, holiday")
 
 
 def SocketIn():
