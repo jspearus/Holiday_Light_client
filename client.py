@@ -3,7 +3,7 @@ import socket
 import datetime
 import threading
 import sys
-import time
+import time, sched, datetime
 import os
 
 import platform
@@ -19,6 +19,7 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
+s = sched.scheduler(time.time, time.sleep)
 DataIn = ''
 connected = True
 
@@ -31,6 +32,11 @@ def send(msg):
     client.send(send_length)
     client.send(message)
     # print(client.recv(2048).decode(FORMAT))
+
+
+#todo update this fucntion every hour???
+def getDay():
+    send(f"holiday")
 
 
 def SocketIn():
@@ -90,10 +96,11 @@ inputThead.setDaemon(True)
 inputThead.start()
 
 send(name)
-
+s.enter(5, 1, getDay(), argument=())
 #todo input hangs up the DataIn var to be displayed
 while connected:
     # smsg = input("enter msg: \n")
     # smsg = '#'
+    s.run()
     time.sleep(.2)
     # send(smsg)
