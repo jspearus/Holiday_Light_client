@@ -37,10 +37,14 @@ def send(msg):
 
 #todo update this fucntion every 15 mins
 def getHoliday():
-    time.sleep(900) # 15 mins
-    if today < datetime.date.today():
-        today = datetime.date.today() 
-        send(f"{name}, holiday")
+    global connected
+    global name
+    global today
+    while connected:
+        time.sleep(900) # 15 mins
+        if today < datetime.date.today():
+            today = datetime.date.today() 
+            send(f"{name}, holiday")
     
 
 
