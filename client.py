@@ -19,7 +19,6 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
-s = sched.scheduler(time.time, time.sleep)
 DataIn = ''
 
 
