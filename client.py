@@ -21,8 +21,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 s = sched.scheduler(time.time, time.sleep)
 DataIn = ''
-connected = True
-today = datetime.date.today()
+
 
 def send(msg):
     message = msg.encode(FORMAT)
@@ -32,19 +31,6 @@ def send(msg):
     client.send(send_length)
     client.send(message)
     # print(client.recv(2048).decode(FORMAT))
-
-
-#todo update this fucntion every hour???
-def getHoliday():
-    global name
-    global today
-    global connected
-    while connected:
-        time.sleep(900)# 15 mins
-        if today < datetime.date.today():
-            today = datetime.date.today()
-            send(f"{name}, holiday")
-        
 
 
 def SocketIn():
@@ -91,9 +77,6 @@ inputThead.start()
 
 send(name)
 
-timeThead = threading.Thread(target=getHoliday, args=())
-timeThead.setDaemon(True)
-timeThead.start()
 #todo input hangs up the DataIn var to be displayed
 while connected:
     # smsg = input("enter msg: \n")
