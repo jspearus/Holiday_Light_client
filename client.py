@@ -3,7 +3,7 @@ import socket
 import datetime
 import threading
 import sys
-import time
+import time, sched, datetime
 import os
 
 import platform
@@ -20,7 +20,6 @@ ADDR = (SERVER, PORT)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
-connected = True
 
 
 def send(msg):
@@ -70,6 +69,7 @@ def useInput():
 SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
 SockThread.start()
+
 inputThead = threading.Thread(target=useInput, args=())
 inputThead.setDaemon(True)
 inputThead.start()
