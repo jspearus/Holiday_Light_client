@@ -73,8 +73,9 @@ def SocketIn():
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
 
         elif DataIn == "test":
-            print(DataIn)
+            file = "/home/pi/Videos/bootup.mp4"
             runtest1()
+            os.system("vlc  " + file)
         DataIn = ''
         time.sleep(.5)
 
@@ -90,6 +91,9 @@ with open('name.txt') as f:
 def useInput():
     global connected
     smsg = ''
+    file = "/home/pi/Videos/bootup.mp4"
+    runtest1()
+    os.system("vlc  " + file)
     while connected:
         try:
             smsg = input("enter msg (q to close): ")
