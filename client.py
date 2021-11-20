@@ -3,7 +3,7 @@ import socket
 import datetime
 import threading
 import sys
-import time
+import time, sched, datetime
 import os
 
 import platform
@@ -70,6 +70,7 @@ def useInput():
 SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
 SockThread.start()
+
 inputThead = threading.Thread(target=useInput, args=())
 inputThead.setDaemon(True)
 inputThead.start()
