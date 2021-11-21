@@ -8,7 +8,7 @@ import time
 import platform
 from grinch import runGrinch
 from snow import runSnow
-from general import runTree, runtest1
+from general import runTree, runtest1,  runInit, runCloak, runLoad
 
 HEADER = 64
 PORT = 5000
@@ -76,6 +76,20 @@ def SocketIn():
             file = "/home/pi/Videos/bootup.mp4"
             runtest1()
             os.system("vlc  " + file)
+
+        elif DataIn == "stealth":
+            file = "/home/pi/Music/018Cloak.mp3"
+            runCloak()
+            os.system("vlc  " + file)
+            os.system("sudo amixer cset numid=3 0%")
+        
+        elif DataIn == "loud":
+            os.system("sudo amixer cset numid=3 100%")
+            file = "/home/pi/Music/003CoreFunction.mp3"
+            runLoad()
+            os.system("vlc  " + file)
+            
+
         DataIn = ''
         time.sleep(.5)
 
@@ -92,7 +106,7 @@ def useInput():
     global connected
     smsg = ''
     file = "/home/pi/Videos/bootup.mp4"
-    runtest1()
+    runInit()
     os.system("vlc  " + file)
     while connected:
         try:

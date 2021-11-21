@@ -48,13 +48,6 @@ def tree():
 
 def test1():
     for i in range(65):
-        port.write(str.encode(f"0,{i},0,100,0#"))
-        port.write(str.encode("show#"))
-        time.sleep(.02)
-    time.sleep(.1)
-    port.write(str.encode("clear#"))
-    port.write(str.encode("show#"))
-    for i in range(65):
         port.write(str.encode(f"0,{i},100,0,0#"))
         port.write(str.encode("show#"))
         time.sleep(.02)
@@ -68,6 +61,86 @@ def test1():
     time.sleep(.1)
     port.write(str.encode("clear#"))
     port.write(str.encode("show#"))
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,100,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.02)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+
+def init():
+    time.sleep(4.5)
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,0,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+    for i in range(65):
+        port.write(str.encode(f"0,{i},0,0,100#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,100,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+
+def cloak():
+    time.sleep(1)
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,100,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,100,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,100,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+
+def loud():
+    time.sleep(1)
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,0,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,0,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+    for i in range(65):
+        port.write(str.encode(f"0,{i},100,0,0#"))
+        port.write(str.encode("show#"))
+        time.sleep(.01)
+    time.sleep(.1)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+
 
 
 def runTree():
@@ -78,3 +151,16 @@ def runTree():
 def runtest1():
     tProc = Process(target=test1, args=())
     tProc.start()
+
+def runInit():
+    tProc = Process(target=init, args=())
+    tProc.start()
+
+def runCloak():
+    tProc = Process(target=cloak, args=())
+    tProc.start()
+
+def runLoad():
+    tProc = Process(target=loud, args=())
+    tProc.start()
+
