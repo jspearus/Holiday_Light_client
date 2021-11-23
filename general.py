@@ -79,14 +79,14 @@ def init():
     port.write(str.encode("clear#"))
     port.write(str.encode("show#"))
     for i in range(65):
-        port.write(str.encode(f"0,{i},0,0,100#"))
+        port.write(str.encode(f"0,{i},0,100,0#"))
         port.write(str.encode("show#"))
         time.sleep(.01)
     time.sleep(.1)
     port.write(str.encode("clear#"))
     port.write(str.encode("show#"))
     for i in range(65):
-        port.write(str.encode(f"0,{i},100,100,0#"))
+        port.write(str.encode(f"0,{i},0,0,100#"))
         port.write(str.encode("show#"))
         time.sleep(.01)
     time.sleep(.1)
