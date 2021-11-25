@@ -47,6 +47,7 @@ def tree():
 
 
 def test1():
+    time.sleep(2)
     for i in range(65):
         port.write(str.encode(f"0,{i},100,0,0#"))
         port.write(str.encode("show#"))

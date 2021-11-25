@@ -15,7 +15,7 @@ pass
 
 
 def grinch():
-    time.sleep(1.5)
+    time.sleep(2)
     #trunk
     port.write(str.encode("0,4,32,10,4#"))
     #tree
