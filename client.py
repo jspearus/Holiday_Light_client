@@ -105,9 +105,7 @@ with open('name.txt') as f:
 def useInput():
     global connected
     smsg = ''
-    file = "/home/pi/Videos/bootup.mp4"
     runInit()
-    os.system("vlc  " + file)
     while connected:
         try:
             smsg = input("enter msg (q to close): ")

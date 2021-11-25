@@ -15,7 +15,7 @@ pass
 
 
 def snow():
-    time.sleep(5.0)
+    time.sleep(5.1)
     port.write(str.encode("0,1,150,150,150#"))
     port.write(str.encode("0,2,150,150,150#"))
     port.write(str.encode("0,3,150,150,150#"))
@@ -51,7 +51,7 @@ def snow():
     port.write(str.encode("0,59,150,150,150#"))
     port.write(str.encode("0,60,150,150,150#"))
     port.write(str.encode("show#"))
-    time.sleep(3.0)
+    time.sleep(2.5)
     port.write(str.encode("0,51,0,0,0#"))
     port.write(str.encode("0,52,0,0,0#"))
     port.write(str.encode("0,59,0,0,0#"))
