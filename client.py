@@ -5,10 +5,10 @@ import threading
 import sys
 import time, sched, datetime
 import os
-
 import platform
-import serial
-from serial.serialutil import Timeout
+
+from general import runtest1
+from advent import runAdvent
 
 HEADER = 64
 PORT = 5000
@@ -71,8 +71,14 @@ def SocketIn():
 
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
+        ##########################################################################################
+        elif DataIn == "test":
+            runtest1()
+
+        ############################################################################################
         DataIn = ''
         time.sleep(.5)
+
 
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
