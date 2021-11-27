@@ -6,6 +6,8 @@ import sys
 import os
 import time
 import platform
+import serial
+from serial.serialutil import Timeout
 from grinch import runGrinch
 from snow import runSnow
 from general import runTree, runtest1,  runInit, runCloak, runLoad
@@ -21,6 +23,9 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
 connected = True
+if platform.system() == "Linux":
+    xBee = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1.0)
+    xBee.write(str.encode("Remote_Online#\r"))
 
 
 def send(msg):
@@ -122,12 +127,36 @@ def useInput():
             time.sleep(.3)
 
 
+def serialRead():
+    global connected
+    print("Listening to xBee...")
+    while connected:
+        Data = xBee.readline()
+        Data = str(Data, 'UTF-8')
+        data = Data.split(',')
+        # serLabel.config(text=data[0])
+        if 'snowman' in data[0]:
+            file = "/home/pi/Videos/snow.mp4"
+            runSnow()
+            os.system("vlc  " + file)
+        elif 'config' in data[0]:
+            pass
+
+        data = ''
+        time.sleep(.2)
+
+
 SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
 SockThread.start()
+
 inputThead = threading.Thread(target=useInput, args=())
 inputThead.setDaemon(True)
 inputThead.start()
+
+serial = threading.Thread(target=serialRead, args=())
+serial.setDaemon(True)
+serial.start()
 
 while connected:
     # smsg = input("enter msg: \n")
