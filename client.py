@@ -139,8 +139,28 @@ def serialRead():
             file = "/home/pi/Videos/snow.mp4"
             runSnow()
             os.system("vlc  " + file)
-        elif 'config' in data[0]:
-            pass
+
+        elif 'grinch' in data[0]:
+            file = "/home/pi/Videos/Grinch.mp4"
+            runGrinch()
+            os.system("vlc  " + file)
+
+        elif 'init' in data[0]:
+            file = "/home/pi/Videos/bootup.mp4"
+            runtest1()
+            os.system("vlc  " + file)
+        
+        elif 'stealth' in data[0]:
+            file = "/home/pi/Music/018Cloak.mp3"
+            runCloak()
+            os.system("vlc  " + file)
+            os.system("sudo amixer cset numid=3 0%")
+
+        elif 'loud' in data[0]:
+            os.system("sudo amixer cset numid=3 100%")
+            file = "/home/pi/Music/003CoreFunction.mp3"
+            runLoad()
+            os.system("vlc  " + file)
 
         data = ''
         time.sleep(.2)
