@@ -69,6 +69,16 @@ def SocketIn():
             file = "/home/pi/Videos/snowing.mp4"
             runSnow()
             os.system("vlc  " + file)
+
+        elif DataIn == 'carol1':
+            file = "/home/pi/Videos/CarolofTheBellsVader.mp4"
+            runSnow()
+            os.system("vlc  " + file)
+
+        elif DataIn == 'carol2':
+            file = "/home/pi/Videos/snCarolofTheBellsMedelowing.mp4"
+            runSnow()
+            os.system("vlc  " + file)
         
         elif DataIn == "init":
             file = "/home/pi/Videos/bootup.mp4"
