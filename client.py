@@ -9,7 +9,7 @@ import platform
 import serial
 from serial.serialutil import Timeout
 from grinch import runGrinch
-from snow import runSnow
+from snow import runSnowman, runSnow
 from general import runTree, runtest1,  runInit, runCloak, runLoad
 
 HEADER = 64
@@ -50,14 +50,41 @@ def SocketIn():
         print(DataIn)
         #########################    COMMANDS ########################
 
-        if DataIn == 'play':
+        if DataIn == 'grinch':
             file = "/home/pi/Videos/Grinch.mp4"
             runGrinch()
             os.system("vlc  " + file)
 
+        elif DataIn == 'snowman':
+            file = "/home/pi/Videos/snowman.mp4"
+            runSnowman()
+            os.system("vlc  " + file)
+
+        elif DataIn == 'snowman2':
+            file = "/home/pi/Videos/snowman2.mp4"
+            runSnowman()
+            os.system("vlc  " + file)
+        
         elif DataIn == 'snow':
-            file = "/home/pi/Videos/snow.mp4"
+            file = "/home/pi/Videos/snowing.mp4"
             runSnow()
+            os.system("vlc  " + file)
+        
+        elif DataIn == "init":
+            file = "/home/pi/Videos/bootup.mp4"
+            runtest1()
+            os.system("vlc  " + file)
+
+        elif DataIn == "stealth":
+            file = "/home/pi/Music/018Cloak.mp3"
+            runCloak()
+            os.system("vlc  " + file)
+            os.system("sudo amixer cset numid=3 0%")
+        
+        elif DataIn == "loud":
+            os.system("sudo amixer cset numid=3 100%")
+            file = "/home/pi/Music/003CoreFunction.mp3"
+            runLoad()
             os.system("vlc  " + file)
 
     #####################################################################
@@ -76,24 +103,6 @@ def SocketIn():
 
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
-
-        elif DataIn == "test":
-            file = "/home/pi/Videos/bootup.mp4"
-            runtest1()
-            os.system("vlc  " + file)
-
-        elif DataIn == "stealth":
-            file = "/home/pi/Music/018Cloak.mp3"
-            runCloak()
-            os.system("vlc  " + file)
-            os.system("sudo amixer cset numid=3 0%")
-        
-        elif DataIn == "loud":
-            os.system("sudo amixer cset numid=3 100%")
-            file = "/home/pi/Music/003CoreFunction.mp3"
-            runLoad()
-            os.system("vlc  " + file)
-            
 
         DataIn = ''
         time.sleep(.5)
@@ -136,8 +145,8 @@ def serialRead():
         data = Data.split(',')
         # serLabel.config(text=data[0])
         if 'snowman' in data[0]:
-            file = "/home/pi/Videos/snow.mp4"
-            runSnow()
+            file = "/home/pi/Videos/snowman.mp4"
+            runSnowman()
             os.system("vlc  " + file)
 
         elif 'grinch' in data[0]:

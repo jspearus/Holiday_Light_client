@@ -14,8 +14,8 @@ elif platform.system() == "Windows":
 pass
 
 
-def snow():
-    time.sleep(5.5)
+def snowman():
+    time.sleep(6.2)
     port.write(str.encode("0,1,150,150,150#"))
     port.write(str.encode("0,2,150,150,150#"))
     port.write(str.encode("0,3,150,150,150#"))
@@ -51,7 +51,7 @@ def snow():
     port.write(str.encode("0,59,150,150,150#"))
     port.write(str.encode("0,60,150,150,150#"))
     port.write(str.encode("show#"))
-    time.sleep(2.5)
+    time.sleep(3.7)
     port.write(str.encode("0,51,0,0,0#"))
     port.write(str.encode("0,52,0,0,0#"))
     port.write(str.encode("0,59,0,0,0#"))
@@ -75,10 +75,61 @@ def snow():
     port.write(str.encode("clear#"))
     port.write(str.encode("show#"))
     
+def runSnowman():
+    p = Process(target=snowman, args=())
+    p.start()
+
+def snow():
+    port.write(str.encode(f"0,63,150,150,150#"))
+    port.write(str.encode(f"0,61,150,150,150#"))
+    port.write(str.encode(f"0,59,150,150,150#"))
+    port.write(str.encode(f"0,57,150,150,150#"))
+    port.write(str.encode("show#"))
+    time.sleep(1)
+    port.write(str.encode(f"0,48,150,150,150#"))
+    port.write(str.encode(f"0,46,150,150,150#"))
+    port.write(str.encode(f"0,44,150,150,150#"))
+    port.write(str.encode(f"0,41,150,150,150#"))
+    port.write(str.encode("show#"))
+    time.sleep(1)
+    port.write(str.encode(f"0,33,150,150,150#"))
+    port.write(str.encode(f"0,35,150,150,150#"))
+    port.write(str.encode(f"0,36,150,150,150#"))
+    port.write(str.encode(f"0,39,150,150,150#"))
+    port.write(str.encode("show#"))
+    time.sleep(1)
+    port.write(str.encode(f"0,24,150,150,150#"))
+    port.write(str.encode(f"0,26,150,150,150#"))
+    port.write(str.encode(f"0,28,150,150,150#"))
+    port.write(str.encode(f"0,29,150,150,150#"))
+    port.write(str.encode("show#"))
+    time.sleep(1)
+    port.write(str.encode(f"0,16,150,150,150#"))
+    port.write(str.encode(f"0,18,150,150,150#"))
+    port.write(str.encode(f"0,20,150,150,150#"))
+    port.write(str.encode(f"0,21,150,150,150#"))
+    port.write(str.encode("show#"))
+    time.sleep(1)
+    port.write(str.encode(f"0,9,150,150,150#"))
+    port.write(str.encode(f"0,11,150,150,150#"))
+    port.write(str.encode(f"0,13,150,150,150#"))
+    port.write(str.encode(f"0,15,150,150,150#"))
+    port.write(str.encode("show#"))
+    time.sleep(1)
+    port.write(str.encode(f"0,0,150,150,150#"))
+    port.write(str.encode(f"0,2,150,150,150#"))
+    port.write(str.encode(f"0,4,150,150,150#"))
+    port.write(str.encode(f"0,6,150,150,150#"))
+    port.write(str.encode("show#"))
+    time.sleep(1)
+    time.sleep(4.25)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
 
 def runSnow():
     p = Process(target=snow, args=())
     p.start()
+
 
 
 
