@@ -24,6 +24,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
 connected = True
+smsg = ''
 if platform.system() == "Linux":
     xBee = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1.0)
     xBee.write(str.encode("Remote_Online#\r"))
@@ -42,6 +43,7 @@ def send(msg):
 def SocketIn():
     global DataIn
     global connected
+    global smsg
     print('listening...')
     print(platform.system())
     while connected:
@@ -114,13 +116,6 @@ def SocketIn():
 
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
-
-        elif DataIn == "quit":
-            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
-            send(DISCONNECT_MESSAGE)
-            time.sleep(1)
-            connected = False
-
         DataIn = ''
         time.sleep(.5)
 
@@ -135,7 +130,7 @@ with open('name.txt') as f:
 
 def useInput():
     global connected
-    smsg = ''
+    global smsg
     runInit()
     while connected:
         try:
