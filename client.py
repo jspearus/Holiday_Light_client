@@ -10,6 +10,7 @@ import serial
 from serial.serialutil import Timeout
 from grinch import runGrinch
 from snow import runSnowman, runSnow
+from bells import runBells
 from general import runTree, runtest1,  runInit, runCloak, runLoad
 
 HEADER = 64
@@ -72,12 +73,12 @@ def SocketIn():
 
         elif DataIn == 'carol1':
             file = "/home/pi/Videos/CarolofTheBellsVader.mp4"
-            runSnow()
+            runBells()
             os.system("vlc  " + file)
 
         elif DataIn == 'carol2':
-            file = "/home/pi/Videos/snCarolofTheBellsMedelowing.mp4"
-            runSnow()
+            file = "/home/pi/Videos/CarolofTheBellsMedel.mp4"
+            runBells()
             os.system("vlc  " + file)
         
         elif DataIn == "init":
