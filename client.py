@@ -7,8 +7,9 @@ import time, sched, datetime
 import os
 import platform
 
-from general import runtest1
+from general import runTest1, runTestTop, runTreeOff
 from advent import runAdvent
+from events import runSnow, runRain
 
 HEADER = 64
 PORT = 5000
@@ -45,6 +46,8 @@ def getHoliday():
         if today < datetime.date.today():
             today = datetime.date.today() 
             send(f"{name}, holiday")
+            runAdvent()
+            
     
 
 
@@ -73,7 +76,23 @@ def SocketIn():
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
         ##########################################################################################
         elif DataIn == "test":
-            runtest1()
+            runTest1()
+
+        elif DataIn == "advent":
+            runAdvent()
+
+        elif DataIn == "snow":
+            runSnow()
+
+        elif DataIn == "SNOW":
+            send("ctrl, snow")
+            runSnow()
+        
+        elif DataIn == "rain":
+            runRain()
+
+        elif DataIn == "off":
+            runTreeOff()
 
         ############################################################################################
         DataIn = ''
