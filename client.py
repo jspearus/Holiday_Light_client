@@ -115,6 +115,12 @@ def SocketIn():
         elif DataIn == "New Year's Day":
             os.system("pcmanfm --set-wallpaper /home/pi/Pictures/newyear.jpg")
 
+        elif DataIn == "quit":
+            os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
+            send(DISCONNECT_MESSAGE)
+            time.sleep(1)
+            connected = False
+
         DataIn = ''
         time.sleep(.5)
 
