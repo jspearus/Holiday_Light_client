@@ -24,7 +24,7 @@ s = sched.scheduler(time.time, time.sleep)
 DataIn = ''
 connected = True
 today = datetime.date.today()
-
+mode = "advent"
 
 def send(msg):
     message = msg.encode(FORMAT)
@@ -135,9 +135,15 @@ send(name)
 timeThead = threading.Thread(target=getHoliday, args=())
 timeThead.setDaemon(True)
 timeThead.start()
+
 #todo input hangs up the DataIn var to be displayed
 while connected:
-    # smsg = input("enter msg: \n")
-    # smsg = '#'
     time.sleep(.2)
-    # send(smsg)
+    today = datetime.datetime.now()
+    if today.hour > 3 and mode != "advent":
+        mode = "advent"
+        DataIn = "advent"
+
+    if today.hour > 10 and today.hour < 11 and today.minute > 29 and today.minute < 31 and mode != "off":
+        mode = "off"
+        DataIn = "off"
