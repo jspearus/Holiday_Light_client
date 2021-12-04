@@ -25,10 +25,12 @@ client.connect(ADDR)
 DataIn = ''
 connected = True
 smsg = ''
+mode = "loud"
+today = datetime.datetime.now()
+print(f'OS detected: {platform.system()}')
 if platform.system() == "Linux":
     xBee = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1.0)
     xBee.write(str.encode("Remote_Online#\r"))
-
 
 def send(msg):
     message = msg.encode(FORMAT)
@@ -45,7 +47,6 @@ def SocketIn():
     global connected
     global smsg
     print('listening...')
-    print(platform.system())
     while connected:
         DataIn = client.recv(2048).decode(FORMAT)
         if not DataIn:
@@ -150,7 +151,7 @@ def useInput():
 
 def serialRead():
     global connected
-    print("Listening to xBee...")
+    print("xBee Listening...")
     while connected:
         Data = xBee.readline()
         Data = str(Data, 'UTF-8')
@@ -200,7 +201,20 @@ serial.setDaemon(True)
 serial.start()
 
 while connected:
-    # smsg = input("enter msg: \n")
-    # smsg = '#'
     time.sleep(.2)
-    # send(smsg)
+    today = datetime.datetime.now()
+
+    if today.hour > 5 and today.hour < 12 and mode != "silent":
+        mode = "silent"
+        file = "/home/pi/Music/018Cloak.mp3"
+        runCloak()
+        os.system("vlc  " + file)
+        os.system("sudo amixer cset numid=3 0%")
+
+    if today.hour > 12 and mode != "loud":
+        mode = "loud"
+        os.system("sudo amixer cset numid=3 100%")
+        file = "/home/pi/Music/003CoreFunction.mp3"
+        runLoad()
+        os.system("vlc  " + file)
+
