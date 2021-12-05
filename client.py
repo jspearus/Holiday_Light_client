@@ -25,7 +25,7 @@ def on_closing():
 
 root.configure(background='black')
 root.title("Holiday Remote")
-root.geometry('100x600+924+20')
+root.geometry('150x620+850+20')
 
 HEADER = 64
 PORT = 5000
@@ -222,6 +222,22 @@ def fromUI(data):
     if data == "init":
         init()
 
+    elif data == "stealth":
+        mute()
+
+    elif data == "loud":
+        loud()
+
+    elif data == "grinch":
+        grinch()
+
+    elif data == "snowman":
+        snowman1()
+
+    elif data == "vader":
+        carol1()
+
+
 def runUi():
     global DataIn
     global mode
@@ -255,12 +271,32 @@ UiThread = threading.Thread(target=runUi, args=())
 UiThread.setDaemon(True)
 UiThread.start()
 
-controlPanel = LabelFrame(root, bg="black", fg="red", width=90, height=600,)
-controlPanel.place(x=0, y=0)
+controlPanel = LabelFrame(root, text="Ctrlpanel", bg="black", highlightcolor="red", fg="red", bd=5, width=125, height=600,)
+controlPanel.place(x=10, y=5)
 
-safebtn = Button(controlPanel, text="Init", height=2,
-                 width=5, bg="orange", fg="black", font=("Arial", 10), command=lambda: fromUI("init"))
-safebtn.place(x=1, y=60)
+initBtn = Button(controlPanel, text="Init", height=2,
+                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("init"))
+initBtn.place(x=15, y=20)
+
+loudBtn = Button(controlPanel, text="Loud", height=2,
+                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("loud"))
+loudBtn.place(x=15, y=120)
+
+muteBtn = Button(controlPanel, text="Mute", height=2,
+                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("stealth"))
+muteBtn.place(x=15, y=220)
+
+grinchBtn = Button(controlPanel, text="Grinch", height=2,
+                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("grinch"))
+grinchBtn.place(x=15, y=320)
+
+snowmanBtn = Button(controlPanel, text="Snowman", height=2,
+                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("snowman"))
+snowmanBtn.place(x=15, y=420)
+
+vaderBtn = Button(controlPanel, text="Vader", height=2,
+                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("vader"))
+vaderBtn.place(x=15, y=520)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
