@@ -20,11 +20,11 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
-s = sched.scheduler(time.time, time.sleep)
+
 DataIn = ''
 connected = True
-today = datetime.date.today()
-mode = "advent"
+today = datetime.datetime.now()
+mode = "off"
 
 def send(msg):
     message = msg.encode(FORMAT)
@@ -43,8 +43,8 @@ def getHoliday():
     global today
     while connected:
         time.sleep(900) # 15 mins
-        if today < datetime.date.today():
-            today = datetime.date.today() 
+        if today.day < datetime.datetime.now().day:
+            today = datetime.datetime.now() 
             send(f"{name}, holiday")
             runAdvent()
             
@@ -142,8 +142,8 @@ while connected:
     today = datetime.datetime.now()
     if today.hour > 3 and mode != "advent":
         mode = "advent"
-        DataIn = "advent"
+        runAdvent()
 
-    if today.hour > 10 and today.hour < 11 and today.minute > 29 and today.minute < 31 and mode != "off":
+    if today.hour > 19 and today.minute > 29 and mode != "off":
         mode = "off"
-        DataIn = "off"
+        runTreeOff()
