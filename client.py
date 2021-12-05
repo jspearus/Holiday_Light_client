@@ -276,27 +276,27 @@ controlPanel.place(x=10, y=5)
 
 initBtn = Button(controlPanel, text="Init", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("init"))
-initBtn.place(x=15, y=20)
+initBtn.place(x=25, y=20)
 
 loudBtn = Button(controlPanel, text="Loud", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("loud"))
-loudBtn.place(x=15, y=120)
+loudBtn.place(x=25, y=120)
 
 muteBtn = Button(controlPanel, text="Mute", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("stealth"))
-muteBtn.place(x=15, y=220)
+muteBtn.place(x=25, y=220)
 
 grinchBtn = Button(controlPanel, text="Grinch", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("grinch"))
-grinchBtn.place(x=15, y=320)
+grinchBtn.place(x=25, y=320)
 
 snowmanBtn = Button(controlPanel, text="Snowman", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("snowman"))
-snowmanBtn.place(x=15, y=420)
+snowmanBtn.place(x=25, y=420)
 
 vaderBtn = Button(controlPanel, text="Vader", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("vader"))
-vaderBtn.place(x=15, y=520)
+vaderBtn.place(x=25, y=520)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
