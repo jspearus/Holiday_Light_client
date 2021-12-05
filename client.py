@@ -7,11 +7,25 @@ import os
 import time
 import platform
 import serial
+from tkinter import *
 from serial.serialutil import Timeout
 from grinch import runGrinch
 from snow import runSnowman, runSnow
 from bells import runBells
 from general import runTree, runtest1,  runInit, runCloak, runLoad
+
+root = Tk()
+
+def on_closing():
+    os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
+    send(DISCONNECT_MESSAGE)
+    time.sleep(1)
+    connected = False
+    root.destroy()
+
+root.configure(background='black')
+root.title("Holiday Remote")
+root.geometry('100x600+924+20')
 
 HEADER = 64
 PORT = 5000
@@ -41,7 +55,56 @@ def send(msg):
     client.send(message)
     # print(client.recv(2048).decode(FORMAT))
 
+############  COMMAND FUNCTIONS ##################
 
+def init():
+    file = "/home/pi/Videos/bootup.mp4"
+    runtest1()
+    os.system("vlc  " + file)
+
+def mute():
+    file = "/home/pi/Music/018Cloak.mp3"
+    runCloak()
+    os.system("vlc  " + file)
+    os.system("sudo amixer cset numid=3 0%")
+
+def loud():
+    os.system("sudo amixer cset numid=3 100%")
+    file = "/home/pi/Music/003CoreFunction.mp3"
+    runLoad()
+    os.system("vlc  " + file)
+
+def grinch():
+    file = "/home/pi/Videos/Grinch.mp4"
+    runGrinch()
+    os.system("vlc  " + file)
+
+def snowman1():
+    file = "/home/pi/Videos/snowman.mp4"
+    runSnowman()
+    os.system("vlc  " + file)
+
+def snowman2():
+    file = "/home/pi/Videos/snowman2.mp4"
+    runSnowman()
+    os.system("vlc  " + file)
+
+def snow():
+    file = "/home/pi/Videos/snowing.mp4"
+    runSnow()
+    os.system("vlc  " + file)
+
+def carol1():
+    file = "/home/pi/Videos/CarolofTheBellsVader.mp4"
+    runBells()
+    os.system("vlc  " + file)
+
+def carol2():
+    file = "/home/pi/Videos/CarolofTheBellsMedel.mp4"
+    runBells()
+    os.system("vlc  " + file)
+
+###########################################################
 def SocketIn():
     global DataIn
     global connected
@@ -55,51 +118,31 @@ def SocketIn():
         #########################    COMMANDS ########################
 
         if DataIn == 'grinch':
-            file = "/home/pi/Videos/Grinch.mp4"
-            runGrinch()
-            os.system("vlc  " + file)
+            grinch()
 
         elif DataIn == 'snowman':
-            file = "/home/pi/Videos/snowman.mp4"
-            runSnowman()
-            os.system("vlc  " + file)
+            snowman1()
 
         elif DataIn == 'snowman2':
-            file = "/home/pi/Videos/snowman2.mp4"
-            runSnowman()
-            os.system("vlc  " + file)
+            snowman2()
         
         elif DataIn == 'snow':
-            file = "/home/pi/Videos/snowing.mp4"
-            runSnow()
-            os.system("vlc  " + file)
+            snow()
 
         elif DataIn == 'carol1':
-            file = "/home/pi/Videos/CarolofTheBellsVader.mp4"
-            runBells()
-            os.system("vlc  " + file)
+            carol1()
 
         elif DataIn == 'carol2':
-            file = "/home/pi/Videos/CarolofTheBellsMedel.mp4"
-            runBells()
-            os.system("vlc  " + file)
+            carol2()
         
         elif DataIn == "init":
-            file = "/home/pi/Videos/bootup.mp4"
-            runtest1()
-            os.system("vlc  " + file)
+            init()
 
         elif DataIn == "stealth":
-            file = "/home/pi/Music/018Cloak.mp3"
-            runCloak()
-            os.system("vlc  " + file)
-            os.system("sudo amixer cset numid=3 0%")
+            mute()
         
         elif DataIn == "loud":
-            os.system("sudo amixer cset numid=3 100%")
-            file = "/home/pi/Music/003CoreFunction.mp3"
-            runLoad()
-            os.system("vlc  " + file)
+            loud()
 
     #####################################################################
 
@@ -158,34 +201,42 @@ def serialRead():
         data = Data.split(',')
         # serLabel.config(text=data[0])
         if 'snowman' in data[0]:
-            file = "/home/pi/Videos/snowman.mp4"
-            runSnowman()
-            os.system("vlc  " + file)
+            snowman1()
 
         elif 'grinch' in data[0]:
-            file = "/home/pi/Videos/Grinch.mp4"
-            runGrinch()
-            os.system("vlc  " + file)
+            grinch()
 
         elif 'init' in data[0]:
-            file = "/home/pi/Videos/bootup.mp4"
-            runtest1()
-            os.system("vlc  " + file)
-        
+            init()
+
         elif 'stealth' in data[0]:
-            file = "/home/pi/Music/018Cloak.mp3"
-            runCloak()
-            os.system("vlc  " + file)
-            os.system("sudo amixer cset numid=3 0%")
+            mute()
 
         elif 'loud' in data[0]:
-            os.system("sudo amixer cset numid=3 100%")
-            file = "/home/pi/Music/003CoreFunction.mp3"
-            runLoad()
-            os.system("vlc  " + file)
+            loud()
 
         data = ''
         time.sleep(.2)
+
+def fromUI(data):
+    if data == "init":
+        init()
+
+def runUi():
+    global DataIn
+    global mode
+    print("timer")
+    while connected:
+        time.sleep(.2)
+        today = datetime.datetime.now()
+        if today.hour > 5 and today.hour < 12 and mode != "silent":
+            mode = "silent"
+            mute()
+
+        if today.hour > 12 and mode != "loud":
+            mode = "loud"
+            loud()
+
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
@@ -200,21 +251,17 @@ serial = threading.Thread(target=serialRead, args=())
 serial.setDaemon(True)
 serial.start()
 
-while connected:
-    time.sleep(.2)
-    today = datetime.datetime.now()
+UiThread = threading.Thread(target=runUi, args=())
+UiThread.setDaemon(True)
+UiThread.start()
 
-    if today.hour > 5 and today.hour < 12 and mode != "silent":
-        mode = "silent"
-        file = "/home/pi/Music/018Cloak.mp3"
-        runCloak()
-        os.system("vlc  " + file)
-        os.system("sudo amixer cset numid=3 0%")
+controlPanel = LabelFrame(root, bg="black", fg="red", width=90, height=600,)
+controlPanel.place(x=0, y=0)
 
-    if today.hour > 12 and mode != "loud":
-        mode = "loud"
-        os.system("sudo amixer cset numid=3 100%")
-        file = "/home/pi/Music/003CoreFunction.mp3"
-        runLoad()
-        os.system("vlc  " + file)
+safebtn = Button(controlPanel, text="Init", height=2,
+                 width=5, bg="orange", fg="black", font=("Arial", 10), command=lambda: fromUI("init"))
+safebtn.place(x=1, y=60)
+
+root.protocol("WM_DELETE_WINDOW", on_closing)
+root.mainloop()
 
