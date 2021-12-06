@@ -62,15 +62,24 @@ def init():
     runtest1()
     os.system("vlc  " + file)
 
+def killswitch():
+    file = "/home/pi/Music/012SystemImpared.mp3"
+    os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
+    os.system("vlc  " + file)
+    send(DISCONNECT_MESSAGE)
+    time.sleep(1)
+    connected = False
+    root.destroy()
+
 def mute():
-    file = "/home/pi/Music/018Cloak.mp3"
+    file = "/home/pi/Music/the_division_pulse.mp3"
     runCloak()
     os.system("vlc  " + file)
     os.system("sudo amixer cset numid=3 0%")
 
 def loud():
     os.system("sudo amixer cset numid=3 100%")
-    file = "/home/pi/Music/003CoreFunction.mp3"
+    file = "/home/pi/Music/division_completed.mp3"
     runLoad()
     os.system("vlc  " + file)
 
@@ -144,6 +153,9 @@ def SocketIn():
         elif DataIn == "loud":
             loud()
 
+        elif DataIn == "close":
+            killswitch()
+            
     #####################################################################
 
         elif DataIn == 'Halloween':
@@ -280,23 +292,23 @@ initBtn.place(x=25, y=20)
 
 loudBtn = Button(controlPanel, text="Loud", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("loud"))
-loudBtn.place(x=25, y=120)
+loudBtn.place(x=25, y=110)
 
 muteBtn = Button(controlPanel, text="Mute", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("stealth"))
-muteBtn.place(x=25, y=220)
+muteBtn.place(x=25, y=210)
 
 grinchBtn = Button(controlPanel, text="Grinch", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("grinch"))
-grinchBtn.place(x=25, y=320)
+grinchBtn.place(x=25, y=310)
 
 snowmanBtn = Button(controlPanel, text="Snowman", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("snowman"))
-snowmanBtn.place(x=25, y=420)
+snowmanBtn.place(x=25, y=410)
 
 vaderBtn = Button(controlPanel, text="Vader", height=2,
                  width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("vader"))
-vaderBtn.place(x=25, y=520)
+vaderBtn.place(x=25, y=510)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
