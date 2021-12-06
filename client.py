@@ -263,7 +263,7 @@ def fromUI(data):
     elif data == "loud":
         loud()
 
-    elif data == "loud":
+    elif data == "med":
         med()
 
     elif data == "grinch":
