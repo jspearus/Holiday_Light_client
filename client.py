@@ -331,13 +331,13 @@ initBtn = Button(controlPanel,
 initBtn.place(x=25, y=20)
 
 loudBtn = Button(controlPanel,
-                 text="Medium",
+                 text="Loud",
                  height=2,
                  width=5,
                  bg="green",
                  fg="black",
                  font=("Arial", 10),
-                 command=lambda: fromUI("med"))
+                 command=lambda: fromUI("loud"))
 loudBtn.place(x=25, y=110)
 
 muteBtn = Button(controlPanel,
