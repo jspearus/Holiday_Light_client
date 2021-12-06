@@ -12,9 +12,10 @@ from serial.serialutil import Timeout
 from grinch import runGrinch
 from snow import runSnowman, runSnow
 from bells import runBells
-from general import runTree, runtest1,  runInit, runCloak, runLoad
+from general import runTree, runtest1, runInit, runCloak, runLoad
 
 root = Tk()
+
 
 def on_closing():
     os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
@@ -22,6 +23,7 @@ def on_closing():
     time.sleep(1)
     connected = False
     root.destroy()
+
 
 root.configure(background='black')
 root.title("Holiday Remote")
@@ -46,6 +48,7 @@ if platform.system() == "Linux":
     xBee = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1.0)
     xBee.write(str.encode("Remote_Online#\r"))
 
+
 def send(msg):
     message = msg.encode(FORMAT)
     msg_length = len(message)
@@ -55,12 +58,15 @@ def send(msg):
     client.send(message)
     # print(client.recv(2048).decode(FORMAT))
 
+
 ############  COMMAND FUNCTIONS ##################
+
 
 def init():
     file = "/home/pi/Videos/bootup.mp4"
     runtest1()
     os.system("vlc  " + file)
+
 
 def killswitch():
     file = "/home/pi/Music/012SystemImpared.mp3"
@@ -71,11 +77,13 @@ def killswitch():
     connected = False
     root.destroy()
 
+
 def mute():
     file = "/home/pi/Music/the_division_pulse.mp3"
     runCloak()
     os.system("vlc  " + file)
     os.system("sudo amixer cset numid=3 0%")
+
 
 def loud():
     os.system("sudo amixer cset numid=3 100%")
@@ -83,35 +91,49 @@ def loud():
     runLoad()
     os.system("vlc  " + file)
 
+
+def med():
+    os.system("sudo amixer cset numid=3 50%")
+    file = "/home/pi/Music/division_completed.mp3"
+    runLoad()
+    os.system("vlc  " + file)
+
+
 def grinch():
     file = "/home/pi/Videos/Grinch.mp4"
     runGrinch()
     os.system("vlc  " + file)
+
 
 def snowman1():
     file = "/home/pi/Videos/snowman.mp4"
     runSnowman()
     os.system("vlc  " + file)
 
+
 def snowman2():
     file = "/home/pi/Videos/snowman2.mp4"
     runSnowman()
     os.system("vlc  " + file)
+
 
 def snow():
     file = "/home/pi/Videos/snowing.mp4"
     runSnow()
     os.system("vlc  " + file)
 
+
 def carol1():
     file = "/home/pi/Videos/CarolofTheBellsVader.mp4"
     runBells()
     os.system("vlc  " + file)
 
+
 def carol2():
     file = "/home/pi/Videos/CarolofTheBellsMedel.mp4"
     runBells()
     os.system("vlc  " + file)
+
 
 ###########################################################
 def SocketIn():
@@ -134,7 +156,7 @@ def SocketIn():
 
         elif DataIn == 'snowman2':
             snowman2()
-        
+
         elif DataIn == 'snow':
             snow()
 
@@ -143,19 +165,19 @@ def SocketIn():
 
         elif DataIn == 'carol2':
             carol2()
-        
+
         elif DataIn == "init":
             init()
 
         elif DataIn == "stealth":
             mute()
-        
+
         elif DataIn == "loud":
             loud()
 
         elif DataIn == "close":
             killswitch()
-            
+
     #####################################################################
 
         elif DataIn == 'Halloween':
@@ -230,6 +252,7 @@ def serialRead():
         data = ''
         time.sleep(.2)
 
+
 def fromUI(data):
     if data == "init":
         init()
@@ -239,6 +262,9 @@ def fromUI(data):
 
     elif data == "loud":
         loud()
+
+    elif data == "loud":
+        med()
 
     elif data == "grinch":
         grinch()
@@ -266,7 +292,6 @@ def runUi():
             loud()
 
 
-
 SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
 SockThread.start()
@@ -283,33 +308,77 @@ UiThread = threading.Thread(target=runUi, args=())
 UiThread.setDaemon(True)
 UiThread.start()
 
-controlPanel = LabelFrame(root, text="Ctrlpanel", bg="black", highlightcolor="red", fg="red", bd=5, width=125, height=600,)
+controlPanel = LabelFrame(
+    root,
+    text="Ctrlpanel",
+    bg="black",
+    highlightcolor="red",
+    fg="red",
+    bd=5,
+    width=125,
+    height=600,
+)
 controlPanel.place(x=10, y=5)
 
-initBtn = Button(controlPanel, text="Init", height=2,
-                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("init"))
+initBtn = Button(controlPanel,
+                 text="Init",
+                 height=2,
+                 width=5,
+                 bg="green",
+                 fg="black",
+                 font=("Arial", 10),
+                 command=lambda: fromUI("init"))
 initBtn.place(x=25, y=20)
 
-loudBtn = Button(controlPanel, text="Loud", height=2,
-                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("loud"))
+loudBtn = Button(controlPanel,
+                 text="Medium",
+                 height=2,
+                 width=5,
+                 bg="green",
+                 fg="black",
+                 font=("Arial", 10),
+                 command=lambda: fromUI("med"))
 loudBtn.place(x=25, y=110)
 
-muteBtn = Button(controlPanel, text="Mute", height=2,
-                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("stealth"))
+muteBtn = Button(controlPanel,
+                 text="Mute",
+                 height=2,
+                 width=5,
+                 bg="green",
+                 fg="black",
+                 font=("Arial", 10),
+                 command=lambda: fromUI("stealth"))
 muteBtn.place(x=25, y=210)
 
-grinchBtn = Button(controlPanel, text="Grinch", height=2,
-                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("grinch"))
+grinchBtn = Button(controlPanel,
+                   text="Grinch",
+                   height=2,
+                   width=5,
+                   bg="green",
+                   fg="black",
+                   font=("Arial", 10),
+                   command=lambda: fromUI("grinch"))
 grinchBtn.place(x=25, y=310)
 
-snowmanBtn = Button(controlPanel, text="Snowman", height=2,
-                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("snowman"))
+snowmanBtn = Button(controlPanel,
+                    text="Snowman",
+                    height=2,
+                    width=5,
+                    bg="green",
+                    fg="black",
+                    font=("Arial", 10),
+                    command=lambda: fromUI("snowman"))
 snowmanBtn.place(x=25, y=410)
 
-vaderBtn = Button(controlPanel, text="Vader", height=2,
-                 width=5, bg="green", fg="black", font=("Arial", 10), command=lambda: fromUI("vader"))
+vaderBtn = Button(controlPanel,
+                  text="Vader",
+                  height=2,
+                  width=5,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("vader"))
 vaderBtn.place(x=25, y=510)
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
-
