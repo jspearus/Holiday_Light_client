@@ -71,6 +71,7 @@ def init():
 def killswitch():
     file = "/home/pi/Music/012SystemImpared.mp3"
     os.system("pcmanfm --set-wallpaper /home/pi/Pictures/base.jpg")
+    runLoad()
     os.system("vlc  " + file)
     send(DISCONNECT_MESSAGE)
     time.sleep(1)
