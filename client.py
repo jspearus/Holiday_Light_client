@@ -25,6 +25,7 @@ client.setblocking(0)
 
 DataIn = ''
 connected = True
+weather = "none"
 today = datetime.datetime.now()
 mode = "off"
 
@@ -43,12 +44,18 @@ def getHoliday():
     global connected
     global name
     global today
+    global weather
     while connected:
-        time.sleep(900) # 15 mins
+        time.sleep(600) # 10 mins
         if today.day < datetime.datetime.now().day:
             today = datetime.datetime.now() 
             send(f"{name}, holiday")
             runAdvent()
+        if weather == "snow":
+            runSnow()
+        elif weather == "rain":
+            runRain()
+
             
     
 
@@ -56,6 +63,7 @@ def getHoliday():
 def SocketIn():
     global DataIn
     global connected
+    global weather
     print('listening...')
     while connected:
         ready = select.select([client], [], [], 30)
@@ -90,14 +98,23 @@ def SocketIn():
             runAdvent()
 
         elif DataIn == "snow":
+            weather = DataIn
             runSnow()
 
         elif DataIn == "SNOW":
             send("ctrl, snow")
+            weather = "snow"
             runSnow()
         
         elif DataIn == "rain":
+            weather = DataIn
             runRain()
+
+        elif DataIn == "cloudy":
+            weather = DataIn
+
+        elif DataIn == "clear":
+            weather = DataIn
 
         elif DataIn == "off":
             runTreeOff()
