@@ -138,12 +138,12 @@ timeThead.start()
 
 #todo input hangs up the DataIn var to be displayed
 while connected:
-    time.sleep(.2)
+    time.sleep(1)
     today = datetime.datetime.now()
     if today.hour > 3 and mode != "advent":
         mode = "advent"
         runAdvent()
 
-    if today.hour > 19 and today.minute > 29 and mode != "off":
+    if today.hour > 22 and mode != "off":
         mode = "off"
         runTreeOff()
