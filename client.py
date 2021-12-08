@@ -1,5 +1,6 @@
 #Master Branch
 import socket
+import select
 import datetime
 import threading
 import sys
@@ -20,6 +21,7 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
+client.setblocking(0)
 
 DataIn = ''
 connected = True
@@ -56,10 +58,14 @@ def SocketIn():
     global connected
     print('listening...')
     while connected:
-        DataIn = client.recv(2048).decode(FORMAT)
-        if not DataIn:
-            break
-        print(DataIn)
+        ready = select.select([client], [], [], 10)
+        if ready[0]:
+            DataIn = client.recv(2048).decode(FORMAT)
+            print(DataIn)
+        else:
+            print("waiting...")
+
+        ####################### COMMANDS ##################
         if DataIn == 'Halloween':
             os.system(
                 "pcmanfm --set-wallpaper /home/pi/Pictures/halloween.jpg")
