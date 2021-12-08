@@ -58,7 +58,7 @@ def SocketIn():
     global connected
     print('listening...')
     while connected:
-        ready = select.select([client], [], [], 10)
+        ready = select.select([client], [], [], 30)
         if ready[0]:
             DataIn = client.recv(2048).decode(FORMAT)
             print(DataIn)
