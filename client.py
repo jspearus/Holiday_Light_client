@@ -63,7 +63,9 @@ def SocketIn():
             DataIn = client.recv(2048).decode(FORMAT)
             print(DataIn)
         else:
-            print("waiting...")
+            # code here to handle lost conection from server
+            pass
+            
 
         ####################### COMMANDS ##################
         if DataIn == 'Halloween':
