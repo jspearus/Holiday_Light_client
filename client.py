@@ -165,10 +165,10 @@ timeThead.start()
 while connected:
     time.sleep(1)
     today = datetime.datetime.now()
-    if today.hour > 3 and mode != "advent":
-        mode = "advent"
-        runAdvent()
-
-    if today.hour > 22 and mode != "off":
+    if today.hour > 21 and mode != "off":
         mode = "off"
         runTreeOff()
+
+    elif today.hour > 3 and today.hour < 22 and mode != "advent":
+        mode = "advent"
+        runAdvent()
