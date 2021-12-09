@@ -217,7 +217,6 @@ with open('name.txt') as f:
 def useInput():
     global connected
     global smsg
-    runInit()
     while connected:
         try:
             smsg = input("enter msg (q to close): ")
@@ -290,19 +289,21 @@ def runUi():
     global name
     print("timer Runing")
     while connected:
-        time.sleep(20)
-        send(f"{name}, ping")
         today = datetime.datetime.now()
         if today.hour > 12 and mode != "loud":
             mode = "loud"
             loud()
 
-        elif today.hour > 5 and mode != "silent":
+        elif today.hour > 5 and today.hour < 13 and mode != "silent":
             mode = "silent"
             mute()
-        else mode != "init":
+            
+        elif today.hour < 6 and mode != "init":
             mode = "init"
             init()
+            
+        time.sleep(20)
+        send(f"{name}, ping")
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
