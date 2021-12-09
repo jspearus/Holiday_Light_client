@@ -1,5 +1,6 @@
 #Hoiday_controller Branch
 import socket
+import select
 import datetime
 import threading
 import sys
@@ -38,10 +39,12 @@ ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
+client.setblocking(0)
 DataIn = ''
 connected = True
+name = ''
 smsg = ''
-mode = "loud"
+mode = "none"
 today = datetime.datetime.now()
 print(f'OS detected: {platform.system()}')
 if platform.system() == "Linux":
@@ -143,10 +146,14 @@ def SocketIn():
     global smsg
     print('listening...')
     while connected:
-        DataIn = client.recv(2048).decode(FORMAT)
-        if not DataIn:
-            break
-        print(DataIn)
+        ready = select.select([client], [], [], 30)
+        if ready[0]:
+            DataIn = client.recv(2048).decode(FORMAT)
+            if DataIn != 'ping':
+                print(DataIn)
+        else:
+            print("waiting...")
+            
         #########################    COMMANDS ########################
 
         if DataIn == 'grinch':
@@ -280,17 +287,22 @@ def fromUI(data):
 def runUi():
     global DataIn
     global mode
-    print("timer")
+    global name
+    print("timer Runing")
     while connected:
-        time.sleep(.2)
+        time.sleep(20)
+        send(f"{name}, ping")
         today = datetime.datetime.now()
-        if today.hour > 5 and today.hour < 12 and mode != "silent":
-            mode = "silent"
-            mute()
-
         if today.hour > 12 and mode != "loud":
             mode = "loud"
             loud()
+
+        elif today.hour > 5 and mode != "silent":
+            mode = "silent"
+            mute()
+        else mode != "init":
+            mode = "init"
+            init()
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
