@@ -8,6 +8,7 @@ import os
 import time
 import platform
 import serial
+from numpy import random
 from tkinter import *
 from serial.serialutil import Timeout
 from grinch import runGrinch
@@ -46,6 +47,7 @@ name = ''
 smsg = ''
 mode = "none"
 today = datetime.datetime.now()
+pre_time = today
 print(f'OS detected: {platform.system()}')
 if platform.system() == "Linux":
     xBee = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1.0)
@@ -81,13 +83,11 @@ def killswitch():
     connected = False
     root.destroy()
 
-
 def mute():
     file = "/home/pi/Music/the_division_pulse.mp3"
     runCloak()
     os.system("vlc  " + file)
     os.system("sudo amixer cset numid=3 0%")
-
 
 def loud():
     os.system("sudo amixer cset numid=3 100%")
@@ -95,49 +95,57 @@ def loud():
     runLoad()
     os.system("vlc  " + file)
 
-
 def med():
     os.system("sudo amixer cset numid=3 50%")
     file = "/home/pi/Music/division_completed.mp3"
     runLoad()
     os.system("vlc  " + file)
 
-
 def grinch():
     file = "/home/pi/Videos/Grinch.mp4"
     runGrinch()
     os.system("vlc  " + file)
-
 
 def snowman1():
     file = "/home/pi/Videos/snowman.mp4"
     runSnowman()
     os.system("vlc  " + file)
 
-
 def snowman2():
     file = "/home/pi/Videos/snowman2.mp4"
     runSnowman()
     os.system("vlc  " + file)
-
 
 def snow():
     file = "/home/pi/Videos/snowing.mp4"
     runSnow()
     os.system("vlc  " + file)
 
-
 def carol1():
     file = "/home/pi/Videos/CarolofTheBellsVader.mp4"
     runBells()
     os.system("vlc  " + file)
-
 
 def carol2():
     file = "/home/pi/Videos/CarolofTheBellsMedel.mp4"
     runBells()
     os.system("vlc  " + file)
 
+def randomEvent():
+    event = random.randint(6, size=(1))
+    print(event)
+    if event == 0:
+        snowman1()
+    elif event == 1:
+        grinch()
+    elif event == 2:
+        carol1()
+    elif event == 3:
+        carol2()
+    elif event == 4:
+        snowman2()
+    elif event == 5:
+        snow()
 
 ###########################################################
 def SocketIn():
@@ -228,6 +236,7 @@ def useInput():
             send(DISCONNECT_MESSAGE)
             time.sleep(1)
             connected = False
+            root.destroy()
         else:
             send(smsg)
             time.sleep(.3)
@@ -287,7 +296,8 @@ def runUi():
     global DataIn
     global mode
     global name
-    print("timer Runing")
+    global pre_time
+    print("timer Running")
     while connected:
         today = datetime.datetime.now()
         if today.hour > 12 and mode != "loud":
@@ -301,7 +311,11 @@ def runUi():
         elif today.hour < 6 and mode != "init":
             mode = "init"
             init()
-            
+
+        if today.minute >= pre_time.minute + 20 or today.minute < 1:
+               randomEvent()
+               pre_time = today
+
         time.sleep(20)
         send(f"{name}, ping")
 
