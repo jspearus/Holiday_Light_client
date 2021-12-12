@@ -14,6 +14,7 @@ from serial.serialutil import Timeout
 from grinch import runGrinch
 from wreath import runWreath
 from ball import runBall
+from pumpkin import runPumpkin
 from ghost import runGhost
 from snow import runSnowman, runSnow, runSnowflake
 from bells import runBells
@@ -46,6 +47,7 @@ client.connect(ADDR)
 client.setblocking(0)
 DataIn = ''
 connected = True
+auto_mode = False
 name = ''
 smsg = ''
 mode = "none"
@@ -154,7 +156,9 @@ def randomEvent():
 def SocketIn():
     global DataIn
     global connected
+    global auto_mode
     global smsg
+    global pre_time
     print('listening...')
     while connected:
         ready = select.select([client], [], [], 30)
@@ -163,7 +167,7 @@ def SocketIn():
             if DataIn != 'ping':
                 print(DataIn)
         else:
-            print("waiting...")
+            pass
             
         #########################    COMMANDS ########################
 
@@ -196,6 +200,25 @@ def SocketIn():
 
         elif DataIn == "close":
             killswitch()
+
+        elif DataIn == "wreath":
+            runWreath()
+        elif DataIn == "ball":
+            runBall()
+        elif DataIn == "ghost":
+            runGhost()
+        elif DataIn == "snowflake":
+            runSnowflake()
+        elif DataIn == "pumpkin":
+            runPumpkin()
+        
+        elif DataIn == "aOn":
+            pre_time = datetime.datetime.now()
+            pre_time.minute = 0
+            auto_mode = True
+        
+        elif DataIn == "aOff":
+            auto_mode = False
 
     #####################################################################
 
@@ -276,6 +299,14 @@ def serialRead():
             runGhost()
         elif 'snowflake' in data[0]:
             runSnowflake()
+        elif 'pumpkin' in data[0]:
+            runPumpkin()
+        elif 'aOn' in data[0]:
+            pre_time = datetime.datetime.now()
+            pre_time.minute = 0
+            auto_mode = True
+        elif 'aOff' in data[0]:
+            auto_mode = False
 
         data = ''
         time.sleep(.2)
@@ -309,6 +340,7 @@ def runUi():
     global mode
     global name
     global pre_time
+    global auto_mode
     print("timer Running")
     while connected:
         today = datetime.datetime.now()
@@ -323,13 +355,13 @@ def runUi():
         elif today.hour < 6 and mode != "init":
             mode = "init"
             init()
-
-        if today.minute >= pre_time.minute + 20 or today.minute < 1:
-               randomEvent()
-               pre_time = today
+        if auto_mode:
+            if today.minute >= pre_time.minute + 20 or today.minute < 1:
+                randomEvent()
+                pre_time = today
 
         time.sleep(20)
-        send(f"{name}, ping")
+    
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
