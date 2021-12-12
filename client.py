@@ -158,7 +158,6 @@ def SocketIn():
     global connected
     global auto_mode
     global smsg
-    global pre_time
     print('listening...')
     while connected:
         ready = select.select([client], [], [], 30)
@@ -213,8 +212,7 @@ def SocketIn():
             runPumpkin()
         
         elif DataIn == "aOn":
-            pre_time = datetime.datetime.now()
-            pre_time.minute = 0
+            randomEvent()
             auto_mode = True
         
         elif DataIn == "aOff":
@@ -270,6 +268,7 @@ def useInput():
 
 def serialRead():
     global connected
+    global auto_mode
     print("xBee Listening...")
     while connected:
         Data = xBee.readline()
@@ -302,8 +301,7 @@ def serialRead():
         elif 'pumpkin' in data[0]:
             runPumpkin()
         elif 'aOn' in data[0]:
-            pre_time = datetime.datetime.now()
-            pre_time.minute = 0
+            randomEvent()
             auto_mode = True
         elif 'aOff' in data[0]:
             auto_mode = False
