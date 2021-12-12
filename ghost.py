@@ -15,14 +15,13 @@ pass
 
 
 def ghost():
-    port.write(str.encode("0,8,20,20,20#"))
+    port.write(str.encode("0,2,20,20,20#"))
+    port.write(str.encode("0,4,20,20,20#"))
+    port.write(str.encode("0,6,20,20,20#"))
     port.write(str.encode("0,9,20,20,20#"))
     port.write(str.encode("0,10,20,20,20#"))
-    port.write(str.encode("0,11,20,20,20#"))
     port.write(str.encode("0,12,20,20,20#"))
-    port.write(str.encode("0,13,20,20,20#"))
     port.write(str.encode("0,14,20,20,20#"))
-    port.write(str.encode("0,15,20,20,20#"))
     port.write(str.encode("0,17,20,20,20#"))
     port.write(str.encode("0,22,20,20,20#"))
     port.write(str.encode("0,25,20,20,20#"))
@@ -35,6 +34,9 @@ def ghost():
     port.write(str.encode("0,51,20,20,20#"))
     port.write(str.encode("0,52,20,20,20#"))
     port.write(str.encode("0,53,20,20,20#"))
+
+    port.write(str.encode("0,42,20,0,0#"))
+    port.write(str.encode("0,45,20,0,0#"))
    
 
     port.write(str.encode("show#"))
