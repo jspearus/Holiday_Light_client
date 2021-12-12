@@ -12,7 +12,10 @@ from numpy import random
 from tkinter import *
 from serial.serialutil import Timeout
 from grinch import runGrinch
-from snow import runSnowman, runSnow
+from wreath import runWreath
+from ball import runBall
+from ghost import runGhost
+from snow import runSnowman, runSnow, runSnowflake
 from bells import runBells
 from general import runTree, runtest1, runInit, runCloak, runLoad
 
@@ -264,6 +267,15 @@ def serialRead():
 
         elif 'loud' in data[0]:
             loud()
+        
+        elif 'wreath' in data[0]:
+            runWreath()
+        elif 'ball' in data[0]:
+            runBall()
+        elif 'ghost' in data[0]:
+            runGhost()
+        elif 'snowflake' in data[0]:
+            runSnowflake()
 
         data = ''
         time.sleep(.2)

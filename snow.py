@@ -130,6 +130,40 @@ def runSnow():
     p = Process(target=snow, args=())
     p.start()
 
+def snowflake():
+    port.write(str.encode(f"0,12,150,150,150#"))
+    port.write(str.encode(f"0,18,150,150,150#"))
+    port.write(str.encode(f"0,19,150,150,150#"))
+    port.write(str.encode(f"0,20,150,150,150#"))
+    port.write(str.encode(f"0,26,150,150,150#"))
+    port.write(str.encode(f"0,28,150,150,150#"))
+    port.write(str.encode(f"0,30,150,150,150#"))
+    port.write(str.encode(f"0,32,150,150,150#"))
+    port.write(str.encode(f"0,33,150,150,150#"))
+    port.write(str.encode(f"0,34,150,150,150#"))
+    port.write(str.encode(f"0,35,150,150,150#"))
+    port.write(str.encode(f"0,36,150,150,150#"))
+    port.write(str.encode(f"0,37,150,150,150#"))
+    port.write(str.encode(f"0,38,150,150,150#"))
+    port.write(str.encode(f"0,42,150,150,150#"))
+    port.write(str.encode(f"0,44,150,150,150#"))
+    port.write(str.encode(f"0,46,150,150,150#"))
+    port.write(str.encode(f"0,50,150,150,150#"))
+    port.write(str.encode(f"0,51,150,150,150#"))
+    port.write(str.encode(f"0,52,150,150,150#"))
+    port.write(str.encode(f"0,60,150,150,150#"))
+    port.write(str.encode(f"0,17,150,150,150#"))
+    port.write(str.encode(f"0,49,150,150,150#"))
+    port.write(str.encode(f"0,53,150,150,150#"))
+
+    port.write(str.encode("show#"))
+    time.sleep(5)
+    port.write(str.encode("clear#"))
+    port.write(str.encode("show#"))
+
+def runSnowflake():
+    p = Process(target=snowflake, args=())
+    p.start()
 
 
 
