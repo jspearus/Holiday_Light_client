@@ -166,11 +166,68 @@ def randomEvent():
     elif event == 2:
         carol1()
     elif event == 3:
-        carol2()
+        randomWhatsThis()
     elif event == 4:
-        snowman2()
+        randomPolar()
     elif event == 5:
         snow()
+
+def randomWhatsThis():
+    event = random.randint(3, size=(1))
+    print(event)
+    if event == 0:
+        file = "/home/pi/Videos/wahtsthis1.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 1:
+        file = "/home/pi/Videos/wahtsthis2.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 2:
+        file = "/home/pi/Videos/wahtsthis3.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+
+def randomPolar():
+    event = random.randint(2, size=(1))
+    print(event)
+    if event == 0:
+        file = "/home/pi/Videos/polar1.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 1:
+        file = "/home/pi/Videos/polar2.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+
+def randomClaws():
+    event = random.randint(6, size=(1))
+    print(event)
+    if event == 0:
+        file = "/home/pi/Videos/sandyclaws1.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 1:
+        file = "/home/pi/Videos/sandyclaws2.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 2:
+        file = "/home/pi/Videos/sandyclaws3.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 3:
+        file = "/home/pi/Videos/sandyclaws4.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 4:
+        file = "/home/pi/Videos/sandyclaws5.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+    elif event == 5:
+        file = "/home/pi/Videos/sandyclaws6.mp4"
+        runSnow()
+        os.system("vlc  " + file)
+
 
 ###########################################################
 def SocketIn():
@@ -207,6 +264,15 @@ def SocketIn():
 
         elif DataIn == 'carol2':
             carol2()
+        
+        elif DataIn == 'claws':
+            randomClaws()
+        
+        elif DataIn == 'polar':
+            randomPolar()
+        
+        elif DataIn == 'what':
+            randomWhatsThis()
 
         elif DataIn == "init":
             init()
@@ -352,14 +418,11 @@ def fromUI(data):
     elif data == "vader":
         carol1()
         
-    elif data == "polar1":
-        polar1()
-
-    elif data == "polar2":
-        polar2()
+    elif data == "polar":
+        randomPolar()
     
-    elif data == "what1":
-        what1()
+    elif data == "what":
+        randomWhatsThis()
     
     elif data == "wreath":
         runWreath()
@@ -525,15 +588,15 @@ vaderBtn = Button(Videos,
                   command=lambda: fromUI("vader"))
 vaderBtn.place(x=25, y=210)
 
-polar1Btn = Button(Videos,
+polarBtn = Button(Videos,
                   text="Polar",
                   height=2,
                   width=8,
                   bg="green",
                   fg="black",
                   font=("Arial", 10),
-                  command=lambda: fromUI("polar1"))
-polar1Btn.place(x=25, y=310)
+                  command=lambda: fromUI("polar"))
+polarBtn.place(x=25, y=310)
 
 whatBtn = Button(Videos,
                   text="Whats This",
@@ -542,7 +605,7 @@ whatBtn = Button(Videos,
                   bg="green",
                   fg="black",
                   font=("Arial", 10),
-                  command=lambda: fromUI("what1"))
+                  command=lambda: fromUI("what"))
 whatBtn.place(x=25, y=410)
 
 backBtn = Button(Videos,
