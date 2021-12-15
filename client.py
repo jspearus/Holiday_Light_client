@@ -441,6 +441,8 @@ UiThread = threading.Thread(target=runUi, args=())
 UiThread.setDaemon(True)
 UiThread.start()
 
+
+############################# USER INTERFACE ###################################
 controlPanel = LabelFrame(
     root,
     text="Holiday_Remote",
