@@ -157,7 +157,7 @@ def what1():
     os.system("vlc  " + file)
 
 def randomEvent():
-    event = random.randint(6, size=(1))
+    event = random.randint(7, size=(1))
     print(event)
     if event == 0:
         snowman1()
@@ -171,6 +171,8 @@ def randomEvent():
         randomPolar()
     elif event == 5:
         snow()
+    elif event == 6:
+        randomPolar()
 
 def randomWhatsThis():
     event = random.randint(3, size=(1))
