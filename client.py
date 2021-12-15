@@ -32,8 +32,9 @@ def on_closing():
 
 
 root.configure(background='black')
+root.config(cursor="none")
 root.title("Holiday Remote")
-root.geometry('150x620+850+20')
+root.geometry('175x620+820+20')
 
 HEADER = 64
 PORT = 5000
@@ -134,6 +135,25 @@ def carol1():
 def carol2():
     file = "/home/pi/Videos/CarolofTheBellsMedel.mp4"
     runBells()
+    os.system("vlc  " + file)
+
+def polar1():
+    file = "/home/pi/Videos/polar1.mp4"
+    runSnowflake()
+    runSnow()
+    runSnow()
+    os.system("vlc  " + file)
+
+def polar2():
+    file = "/home/pi/Videos/polar2.mp4"
+    runSnow()
+    runSnowflake()
+    runSnow()
+    os.system("vlc  " + file)
+
+def what1():
+    file = "/home/pi/Videos/wahtsthis1.mp4"
+    runSnow()
     os.system("vlc  " + file)
 
 def randomEvent():
@@ -331,6 +351,49 @@ def fromUI(data):
 
     elif data == "vader":
         carol1()
+        
+    elif data == "polar1":
+        polar1()
+
+    elif data == "polar2":
+        polar2()
+    
+    elif data == "what1":
+        what1()
+    
+    elif data == "wreath":
+        runWreath()
+
+    elif data == "ball":
+        runBall()
+
+    elif data == "ghost":
+        runGhost()
+
+    elif data == "snowflake":
+        runSnowflake()
+
+    elif data == "pumpkin":
+        runPumpkin()
+    
+
+    elif data == "video":
+        controlPanel.place_forget()
+        Videos.place(x=10, y=5)
+
+    elif data == "icon":
+        controlPanel.place_forget()
+        Icons.place(x=10, y=5)
+
+    elif data == "settings":
+        controlPanel.place_forget()
+        Settings.place(x=10, y=5)
+
+    elif data == "back":
+        Videos.place_forget()
+        Icons.place_forget()
+        Settings.place_forget()
+        controlPanel.place(x=10, y=5)
 
 
 def runUi():
@@ -380,75 +443,236 @@ UiThread.start()
 
 controlPanel = LabelFrame(
     root,
-    text="Ctrlpanel",
+    text="Holiday_Remote",
     bg="black",
     highlightcolor="red",
     fg="red",
     bd=5,
-    width=125,
+    width=150,
     height=600,
 )
 controlPanel.place(x=10, y=5)
 
-initBtn = Button(controlPanel,
+VidBtn = Button(controlPanel,
+                 text="Videos",
+                 height=2,
+                 width=8,
+                 bg="green",
+                 fg="black",
+                 font=("Arial", 10),
+                 command=lambda: fromUI("video"))
+VidBtn.place(x=25, y=20)
+
+IconBtn = Button(controlPanel,
+                 text="Icons",
+                 height=2,
+                 width=8,
+                 bg="green",
+                 fg="black",
+                 font=("Arial", 10),
+                 command=lambda: fromUI("icon"))
+IconBtn.place(x=25, y=110)
+
+setBtn = Button(controlPanel,
+                 text="Settings",
+                 height=2,
+                 width=8,
+                 bg="green",
+                 fg="black",
+                 font=("Arial", 10),
+                 command=lambda: fromUI("settings"))
+setBtn.place(x=25, y=210)
+
+Videos = LabelFrame(
+    root,
+    text="Videos",
+    bg="black",
+    highlightcolor="red",
+    fg="red",
+    bd=5,
+    width=150,
+    height=600,
+)
+grinchBtn = Button(Videos,
+                   text="Grinch",
+                   height=2,
+                   width=8,
+                   bg="green",
+                   fg="black",
+                   font=("Arial", 10),
+                   command=lambda: fromUI("grinch"))
+grinchBtn.place(x=25, y=20)
+
+snowmanBtn = Button(Videos,
+                    text="Snowman",
+                    height=2,
+                    width=8,
+                    bg="green",
+                    fg="black",
+                    font=("Arial", 10),
+                    command=lambda: fromUI("snowman"))
+snowmanBtn.place(x=25, y=110)
+
+vaderBtn = Button(Videos,
+                  text="Vader",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("vader"))
+vaderBtn.place(x=25, y=210)
+
+polar1Btn = Button(Videos,
+                  text="Polar",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("polar1"))
+polar1Btn.place(x=25, y=310)
+
+whatBtn = Button(Videos,
+                  text="Whats This",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("what1"))
+whatBtn.place(x=25, y=410)
+
+backBtn = Button(Videos,
+                  text="Back",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("back"))
+backBtn.place(x=25, y=510)
+
+Settings = LabelFrame(
+    root,
+    text="Settings",
+    bg="black",
+    highlightcolor="red",
+    fg="red",
+    bd=5,
+    width=150,
+    height=600,
+)
+
+initBtn = Button(Settings,
                  text="Init",
                  height=2,
-                 width=5,
+                 width=8,
                  bg="green",
                  fg="black",
                  font=("Arial", 10),
                  command=lambda: fromUI("init"))
 initBtn.place(x=25, y=20)
 
-loudBtn = Button(controlPanel,
+loudBtn = Button(Settings,
                  text="Loud",
                  height=2,
-                 width=5,
+                 width=8,
                  bg="green",
                  fg="black",
                  font=("Arial", 10),
                  command=lambda: fromUI("loud"))
 loudBtn.place(x=25, y=110)
 
-muteBtn = Button(controlPanel,
+muteBtn = Button(Settings,
                  text="Mute",
                  height=2,
-                 width=5,
+                 width=8,
                  bg="green",
                  fg="black",
                  font=("Arial", 10),
                  command=lambda: fromUI("stealth"))
 muteBtn.place(x=25, y=210)
-
-grinchBtn = Button(controlPanel,
-                   text="Grinch",
-                   height=2,
-                   width=5,
-                   bg="green",
-                   fg="black",
-                   font=("Arial", 10),
-                   command=lambda: fromUI("grinch"))
-grinchBtn.place(x=25, y=310)
-
-snowmanBtn = Button(controlPanel,
-                    text="Snowman",
-                    height=2,
-                    width=5,
-                    bg="green",
-                    fg="black",
-                    font=("Arial", 10),
-                    command=lambda: fromUI("snowman"))
-snowmanBtn.place(x=25, y=410)
-
-vaderBtn = Button(controlPanel,
-                  text="Vader",
+backBtn = Button(Settings,
+                  text="Back",
                   height=2,
-                  width=5,
+                  width=8,
                   bg="green",
                   fg="black",
                   font=("Arial", 10),
-                  command=lambda: fromUI("vader"))
-vaderBtn.place(x=25, y=510)
+                  command=lambda: fromUI("back"))
+backBtn.place(x=25, y=510)
+
+Icons = LabelFrame(
+    root,
+    text="Icons",
+    bg="black",
+    highlightcolor="red",
+    fg="red",
+    bd=5,
+    width=150,
+    height=600,
+)
+wreathBtn = Button(Icons,
+                   text="Wreath",
+                   height=2,
+                   width=8,
+                   bg="green",
+                   fg="black",
+                   font=("Arial", 10),
+                   command=lambda: fromUI("wreath"))
+wreathBtn.place(x=25, y=20)
+
+ballBtn = Button(Icons,
+                    text="Ball",
+                    height=2,
+                    width=8,
+                    bg="green",
+                    fg="black",
+                    font=("Arial", 10),
+                    command=lambda: fromUI("ball"))
+ballBtn.place(x=25, y=110)
+
+snowFlakeBtn = Button(Icons,
+                  text="Snowflake",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("snowflake"))
+snowFlakeBtn.place(x=25, y=210)
+
+ghostBtn = Button(Icons,
+                  text="Ghost",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("ghost"))
+ghostBtn.place(x=25, y=310)
+
+pumpkinBtn = Button(Icons,
+                  text="Pumpkin",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("pumpkin"))
+pumpkinBtn.place(x=25, y=410)
+
+backBtn = Button(Icons,
+                  text="Back",
+                  height=2,
+                  width=8,
+                  bg="green",
+                  fg="black",
+                  font=("Arial", 10),
+                  command=lambda: fromUI("back"))
+backBtn.place(x=25, y=510)
+
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
