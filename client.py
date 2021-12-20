@@ -68,11 +68,9 @@ def useInput():
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
-SockThread.setDaemon(True)
 SockThread.start()
 
 inputThead = threading.Thread(target=useInput, args=())
-inputThead.setDaemon(True)
 inputThead.start()
 
 send(name)
