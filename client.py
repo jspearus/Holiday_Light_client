@@ -300,7 +300,6 @@ def SocketIn():
             runPumpkin()
         
         elif DataIn == "aOn":
-            randomEvent()
             auto_mode = True
         
         elif DataIn == "aOff":
@@ -369,6 +368,12 @@ def serialRead():
         elif 'grinch' in data[0]:
             grinch()
 
+        elif 'claws' in data[0]:
+            randomClaws()
+
+        elif 'carol' in data[0]:
+            carol1()
+
         elif 'init' in data[0]:
             init()
 
@@ -389,10 +394,14 @@ def serialRead():
         elif 'pumpkin' in data[0]:
             runPumpkin()
         elif 'aOn' in data[0]:
-            randomEvent()
             auto_mode = True
+
         elif 'aOff' in data[0]:
+            print('Auto - Off')
             auto_mode = False
+
+        elif 'kill' in data[0]:
+            killswitch()
 
         data = ''
         time.sleep(.2)
@@ -482,10 +491,12 @@ def runUi():
             mode = "init"
             init()
         if auto_mode:
-            if today.minute >= pre_time.minute + 20 or today.minute < 1:
+            if today >= pre_time:
+                addMin = random.randint(10, 20, size=(1))
+                
+                print(int(addMin))
                 randomEvent()
-                pre_time = today
-
+                pre_time = today + datetime.timedelta(minutes=int(addMin))
         time.sleep(20)
     
 
