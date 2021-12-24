@@ -364,6 +364,9 @@ def serialRead():
         # serLabel.config(text=data[0])
         if 'snowman' in data[0]:
             snowman1()
+        
+        elif 'snowman2' in data[0]:
+            snowman2()
 
         elif 'grinch' in data[0]:
             grinch()
@@ -373,6 +376,9 @@ def serialRead():
 
         elif 'carol' in data[0]:
             carol1()
+        
+        elif 'carol2' in data[0]:
+            carol12()
 
         elif 'init' in data[0]:
             init()
