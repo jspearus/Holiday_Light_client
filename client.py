@@ -362,11 +362,11 @@ def serialRead():
         Data = str(Data, 'UTF-8')
         data = Data.split(',')
         # serLabel.config(text=data[0])
-        if 'snowman' in data[0]:
-            snowman1()
-        
-        elif 'snowman2' in data[0]:
+        if 'snowman2' in data[0]:
             snowman2()
+        
+        elif 'snowman' in data[0]:
+            snowman1()
 
         elif 'grinch' in data[0]:
             grinch()
@@ -374,12 +374,12 @@ def serialRead():
         elif 'claws' in data[0]:
             randomClaws()
 
+        elif 'carol2' in data[0]:
+            carol2()
+
         elif 'carol' in data[0]:
             carol1()
         
-        elif 'carol2' in data[0]:
-            carol12()
-
         elif 'init' in data[0]:
             init()
 
