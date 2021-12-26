@@ -7,6 +7,7 @@ import platform
 import serial
 from serial.serialutil import Timeout
 from advent import runAdvent
+from newyear import runNewYear
 
 if platform.system() == "Linux":
     port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=3.0)
@@ -68,7 +69,7 @@ def snow():
         port.write(str.encode("show#"))
         time.sleep(.2)
     time.sleep(2)
-    runAdvent()
+    runNewYear()
 
 def runSnow():
     p = Process(target=snow, args=())
@@ -130,7 +131,7 @@ def rain():
         port.write(str.encode("show#"))
         time.sleep(.2)
     time.sleep(2)
-    runAdvent()
+    runNewYear()
 
 def runRain():
     p = Process(target=rain, args=())

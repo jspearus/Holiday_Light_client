@@ -11,6 +11,7 @@ import platform
 from general import runTest1, runTestTop, runTreeOff
 from advent import runAdvent
 from events import runSnow, runRain
+from newyear import runNewYear
 
 HEADER = 64
 PORT = 5000
@@ -46,15 +47,17 @@ def getHoliday():
     global today
     global weather
     while connected:
-        time.sleep(200) #############
+        time.sleep(90) #############
         if today.day < datetime.datetime.now().day:
             today = datetime.datetime.now() 
             send(f"{name}, holiday")
-            runAdvent()
-        if weather == "snow":
-            runSnow()
-        elif weather == "rain":
-            runRain()
+            runNewYear()
+        if mode != 'off':   
+            if weather == "snow":
+                runSnow()
+
+            elif weather == "rain":
+                runRain()
 
             
     
@@ -171,4 +174,4 @@ while connected:
 
     elif today.hour > 3 and today.hour < 22 and mode != "advent":
         mode = "advent"
-        runAdvent()
+        runNewYear()
