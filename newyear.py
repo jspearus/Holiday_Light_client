@@ -34,7 +34,7 @@ def newYear():
         time.sleep(.07)
     
     for i in range(24):
-        port.write(str.encode(f"1,{i},200,200,200#"))
+        port.write(str.encode(f"1,{i},128,80,32#"))
         port.write(str.encode("show1#"))
         time.sleep(.07)
 

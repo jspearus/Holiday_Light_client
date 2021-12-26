@@ -46,6 +46,7 @@ def getHoliday():
     global name
     global today
     global weather
+    send(f"{name}, holiday")
     while connected:
         time.sleep(90) #############
         if today.day < datetime.datetime.now().day:
