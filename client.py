@@ -10,6 +10,12 @@ import platform
 import serial
 from serial.serialutil import Timeout
 
+if platform.system() == "Linux":
+    port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=3.0)
+elif platform.system() == "Windows":
+    port = serial.Serial("COM8", baudrate=115200, timeout=3.0)
+pass
+
 HEADER = 64
 PORT = 5000
 FORMAT = 'utf-8'
@@ -42,6 +48,10 @@ def SocketIn():
         if not DataIn:
             break
         print(DataIn)
+        if DataIn == 'left':
+            port.write(str.encode(f"500-1000#"))
+        elif DataIn == 'right':
+            port.write(str.encode(f"2000-1000#"))
         DataIn = ''
         time.sleep(.5)
 
