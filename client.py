@@ -1,4 +1,4 @@
-#Master Branch
+#LV-HTPC Branch
 import socket
 import datetime
 import threading
