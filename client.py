@@ -60,11 +60,15 @@ def SocketIn():
             break
         print(DataIn)
         if DataIn == 'left':
-            panPos = 500
+            panPos = panPos - 5
+            if (panPos < 500):
+                panPos = 500
             moveCam()
 
         elif DataIn == 'right':
-            panPos = 2000
+            panPos = panPos + 5
+            if (panPos > 2000):
+                panPos = 2000
             moveCam()
 
         elif DataIn == 'up':
