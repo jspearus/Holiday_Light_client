@@ -28,6 +28,15 @@ client.connect(ADDR)
 DataIn = ''
 connected = True
 
+panPos = 1000
+tiltPos = 1000
+
+
+def moveCam():
+    global panPos
+    global tiltPos
+    port.write(str.encode(f"{panPos}-{tiltPos}#"))
+
 
 def send(msg):
     message = msg.encode(FORMAT)
@@ -42,6 +51,8 @@ def send(msg):
 def SocketIn():
     global DataIn
     global connected
+    global panPos
+    global tiltPos
     print('listening...')
     while connected:
         DataIn = client.recv(2048).decode(FORMAT)
@@ -49,9 +60,21 @@ def SocketIn():
             break
         print(DataIn)
         if DataIn == 'left':
-            port.write(str.encode(f"500-1000#"))
+            panPos = 500
+            moveCam()
+
         elif DataIn == 'right':
-            port.write(str.encode(f"2000-1000#"))
+            panPos = 2000
+            moveCam()
+
+        elif DataIn == 'up':
+            tiltPos = 750
+            moveCam()
+
+        elif DataIn == 'down':
+            tiltPos = 2000
+            moveCam()
+
         DataIn = ''
         time.sleep(.5)
 
