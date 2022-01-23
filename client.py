@@ -13,7 +13,7 @@ from serial.serialutil import Timeout
 if platform.system() == "Linux":
     port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=3.0)
 elif platform.system() == "Windows":
-    port = serial.Serial("COM8", baudrate=115200, timeout=3.0)
+    port = serial.Serial("COM4", baudrate=115200, timeout=3.0)
 pass
 
 HEADER = 64
