@@ -13,7 +13,7 @@ from serial.serialutil import Timeout
 if platform.system() == "Linux":
     port = serial.Serial("/dev/ttyACM0", baudrate=115200, timeout=3.0)
 elif platform.system() == "Windows":
-    port = serial.Serial("COM4", baudrate=115200, timeout=3.0)
+    port = serial.Serial("COM8", baudrate=115200, timeout=3.0)
 pass
 
 HEADER = 64
@@ -30,6 +30,7 @@ connected = True
 
 panPos = 1000
 tiltPos = 1000
+speed = 50
 
 
 def moveCam():
@@ -53,6 +54,7 @@ def SocketIn():
     global connected
     global panPos
     global tiltPos
+    global speed
     print('listening...')
     while connected:
         DataIn = client.recv(2048).decode(FORMAT)
@@ -60,24 +62,43 @@ def SocketIn():
             break
         print(DataIn)
         if DataIn == 'left':
-            panPos = panPos - 5
+            panPos = panPos - speed
             if (panPos < 500):
                 panPos = 500
             moveCam()
 
         elif DataIn == 'right':
-            panPos = panPos + 5
+            panPos = panPos + speed
             if (panPos > 2000):
                 panPos = 2000
             moveCam()
 
         elif DataIn == 'up':
-            tiltPos = 750
+            tiltPos = tiltPos - speed
+            if(tiltPos < 750):
+                tiltPos = 750
             moveCam()
 
         elif DataIn == 'down':
-            tiltPos = 2000
+            tiltPos = tiltPos + speed
+            if(tiltPos > 2000):
+                tiltPos = 2000
             moveCam()
+
+        elif DataIn == 'low':
+            speed = 50
+        
+        elif DataIn == 'med':
+            speed = 100
+
+        elif DataIn == 'hi':
+            speed = 250
+
+        elif DataIn == 'on':
+            port.write(str.encode(f"on-{tiltPos}#"))
+
+        elif DataIn == 'off':
+            port.write(str.encode(f"off-{tiltPos}#"))
 
         DataIn = ''
         time.sleep(.5)
@@ -105,7 +126,6 @@ def useInput():
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
-SockThread.start()
 
 inputThead = threading.Thread(target=useInput, args=())
 inputThead.start()
