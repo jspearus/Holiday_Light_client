@@ -20,7 +20,7 @@ HEADER = 64
 PORT = 5000
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-SERVER = "dgscore.ddns.net"
+SERVER = "synapse.viewdns.net"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -126,6 +126,7 @@ def useInput():
 
 
 SockThread = threading.Thread(target=SocketIn, args=())
+SockThread.start()
 
 inputThead = threading.Thread(target=useInput, args=())
 inputThead.start()
