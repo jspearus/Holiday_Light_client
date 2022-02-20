@@ -93,13 +93,29 @@ def SocketIn():
 
         elif DataIn == 'hi':
             speed = 250
+        
+        elif DataIn == 'window':
+            panPos = 1100;
+            tiltPos = 1400;
+            port.write(str.encode(f"{panPos}-{tiltPos}#"))
+        
+        elif DataIn == 'couch':
+            panPos = 1700;
+            tiltPos = 1300;
+            port.write(str.encode(f"{panPos}-{tiltPos}#"))
+
+        elif DataIn == 'fire':
+            panPos = 2000;
+            tiltPos = 1200;
+            port.write(str.encode(f"{panPos}-{tiltPos}#"))
 
         elif DataIn == 'on':
             port.write(str.encode(f"on-{tiltPos}#"))
 
         elif DataIn == 'off':
-            port.write(str.encode(f"off-{tiltPos}#"))
+            port.write(str.encode(f"off-{tiltPos}#")) 
 
+        print(f"{panPos}-{tiltPos}#")
         DataIn = ''
         time.sleep(.5)
 
@@ -114,9 +130,12 @@ with open('name.txt') as f:
 
 def useInput():
     global connected
+    port.write(str.encode(f"on-{tiltPos}#")) 
     while connected:
         smsg = input("enter msg (q to close): ")
         if smsg == 'q':
+            port.write(str.encode(f"off-{tiltPos}#")) 
+            time.sleep(1)
             send(DISCONNECT_MESSAGE)
             time.sleep(1)
             connected = False
