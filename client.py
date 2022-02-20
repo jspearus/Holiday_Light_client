@@ -44,7 +44,7 @@ def SocketIn():
         print(DataIn)
         DataIn = ''
         time.sleep(.5)
-
+        
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
 with open('name.txt') as f:
