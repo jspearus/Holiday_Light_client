@@ -121,7 +121,7 @@ def SocketIn():
 
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
-with open('name.txt') as f:
+with open('C:/Users/Public/Documents/GitHub/Holiday_Light_client/name.txt') as f:
     name = f.readline()
     send(name)
     print(f"Connected as: {name}")
