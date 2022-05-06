@@ -57,9 +57,10 @@ else:
     data = {"client": {"deviceName": val}}
     with open('name.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-    name = val
+    name = name = data['client'] ['deviceName']
     f.close()
     print("RESTART CLIENT FOR NAME TO BE RECOGNIZED!!!!")
+    #todo figure out why the client needs to be restarted when name is assigned
 #########################################################################
 send(name)
 print(f"Connected as: {name}")
@@ -87,7 +88,6 @@ inputThead = threading.Thread(target=useInput, args=())
 inputThead.setDaemon(True)
 inputThead.start()
 
-send(name)
 
 #todo input hangs up the DataIn var to be displayed
 while connected:
