@@ -4,8 +4,8 @@ import datetime
 import threading
 import sys
 import time, sched, datetime
-import os
-
+import os, json
+from pathlib import Path
 import platform
 import serial
 from serial.serialutil import Timeout
@@ -47,11 +47,23 @@ def SocketIn():
 
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
-with open('name.txt') as f:
-    name = f.readline()
-    send(name)
-    print(f"Connected as: {name}")
-    send('site, devices')
+f = Path('name.json')
+if f.is_file():
+    f = open('name.json')
+    data = json.load(f)
+    name = data['client'] ['deviceName']
+else:
+    val = input("Enter Client Device Name: ")
+    data = {"client": {"deviceName": val}}
+    with open('name.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    name = val
+    f.close()
+    print("RESTART CLIENT FOR NAME TO BE RECOGNIZED!!!!")
+#########################################################################
+send(name)
+print(f"Connected as: {name}")
+send('site, devices')
 
 
 def useInput():
