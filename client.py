@@ -9,6 +9,7 @@ from pathlib import Path
 import platform
 import serial
 from serial.serialutil import Timeout
+from colorama import Fore, Back, Style
 
 HEADER = 64
 PORT = 5000
@@ -59,7 +60,8 @@ else:
         json.dump(data, f, ensure_ascii=False, indent=4)
     name = name = data['client'] ['deviceName']
     f.close()
-    print("RESTART CLIENT FOR NAME TO BE RECOGNIZED!!!!")
+    print(Fore.RED + "RESTART CLIENT FOR NAME TO BE RECOGNIZED!!!!")
+    print(Style.RESET_ALL)
     #todo figure out why the client needs to be restarted when name is assigned
 #########################################################################
 send(name)
