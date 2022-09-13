@@ -4,7 +4,7 @@ import datetime
 import threading
 import sys
 import time, sched, datetime
-import os, json
+import os, json, requests
 from pathlib import Path
 import platform
 import serial
@@ -32,6 +32,14 @@ def send(msg):
     client.send(send_length)
     client.send(message)
     # print(client.recv(2048).decode(FORMAT))
+
+def get_weather():
+    response = requests.get(
+        "https://api.openweathermap.org/data/2.5/weather?q=Coal%20City,Illinois&units=imperial&appid=fb1746a57b7d298207e7d62a0067f503")
+    json_data = json.loads(response.text)
+    weather = json_data['weather']
+    print(f"current weather: {weather[0]['main']}")
+    print(f"current condition: {weather[0]['description']}")
 
 
 def SocketIn():
@@ -62,7 +70,7 @@ def SocketIn():
             os.system("gsettings set org.gnome.desktop.background picture-uri file:////home/jeff/Pictures/newyear.jpg")
         elif DataIn == "snow":
             file = "/home/jeff/Videos/snow.mp4"
-            os.system("vlc  " + file)
+            os.system("mplayer -fs  " + file)
             # os.system("sudo amixer cset numid=3 0%")
 
         DataIn = ''
@@ -118,5 +126,6 @@ inputThead.start()
 while connected:
     # smsg = input("enter msg: \n")
     # smsg = '#'
-    time.sleep(.2)
+    time.sleep(30)
+    get_weather()
     # send(smsg)
