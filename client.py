@@ -4,11 +4,12 @@ import datetime
 import threading
 import sys
 import time, sched, datetime
-import os
-
+import os, json
+from pathlib import Path
 import platform
 import serial
 from serial.serialutil import Timeout
+from colorama import Fore, Back, Style
 
 HEADER = 64
 PORT = 5000
@@ -47,11 +48,25 @@ def SocketIn():
 
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
-with open('name.txt') as f:
-    name = f.readline()
-    send(name)
-    print(f"Connected as: {name}")
-    send('site, devices')
+f = Path('name.json')
+if f.is_file():
+    f = open('name.json')
+    data = json.load(f)
+    name = data['client'] ['deviceName']
+else:
+    val = input("Enter Client Device Name: ")
+    data = {"client": {"deviceName": val}}
+    with open('name.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    name = name = data['client'] ['deviceName']
+    f.close()
+    print(Fore.RED + "RESTART CLIENT FOR NAME TO BE RECOGNIZED!!!!")
+    print(Style.RESET_ALL)
+    #todo figure out why the client needs to be restarted when name is assigned
+#########################################################################
+send(name)
+print(f"Connected as: {name}")
+send('site, devices')
 
 
 def useInput():
@@ -75,7 +90,6 @@ inputThead = threading.Thread(target=useInput, args=())
 inputThead.setDaemon(True)
 inputThead.start()
 
-send(name)
 
 #todo input hangs up the DataIn var to be displayed
 while connected:
