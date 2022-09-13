@@ -43,8 +43,24 @@ def SocketIn():
         if not DataIn:
             break
         print(DataIn)
-        DataIn = ''
+        
         time.sleep(.5)
+        if DataIn == 'Halloween':
+
+            os.system(
+                "gsettings set org.gnome.desktop.background picture-uri file:////home/jeff/Pictures/halloween.jpg")
+
+        elif DataIn == 'Thanksgiving':
+            os.system(
+                "gsettings set org.gnome.desktop.background picture-uri file:////home/jeff/Pictures/thanksgiving.jpg")
+
+        elif DataIn == 'Christmas Day':
+            os.system(
+                "gsettings set org.gnome.desktop.background picture-uri file:////home/jeff/Pictures/christmas.jpg")
+
+        elif DataIn == "New Year's Day":
+            os.system("gsettings set org.gnome.desktop.background picture-uri file:////home/jeff/Pictures/newyear.jpg")
+        DataIn = ''
 
 
 #todo EDIT NAME.TXT TO THE NAME OF DEVICE
@@ -75,6 +91,8 @@ def useInput():
         smsg = input("enter msg (q to close): ")
         if smsg == 'q':
             send(DISCONNECT_MESSAGE)
+            os.system(
+                "gsettings set org.gnome.desktop.background picture-uri file:////home/jeff/Pictures/default.jpg")
             time.sleep(1)
             connected = False
         else:
