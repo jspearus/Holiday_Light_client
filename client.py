@@ -60,6 +60,11 @@ def SocketIn():
 
         elif DataIn == "New Year's Day":
             os.system("gsettings set org.gnome.desktop.background picture-uri file:////home/jeff/Pictures/newyear.jpg")
+        elif DataIn == "snow":
+            file = "/home/jeff/Videos/snow.mp4"
+            os.system("vlc  " + file)
+            # os.system("sudo amixer cset numid=3 0%")
+
         DataIn = ''
 
 
