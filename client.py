@@ -22,6 +22,14 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 DataIn = ''
 connected = True
+weatherCondition = 'clear'
+
+# weather condition lists
+snowing =["snow", "flurries"]
+clear =["fair", "clear"]
+fog =["fog", "mist", "haze", "squall", "smoke", "dust"]
+raining =["rain", "mist", "drizzle", "thunderstorm"]
+cloud =["cloud", "cloudy", "clouds"]
 
 
 def send(msg):
@@ -38,8 +46,17 @@ def get_weather():
         "https://api.openweathermap.org/data/2.5/weather?q=Coal%20City,Illinois&units=imperial&appid=fb1746a57b7d298207e7d62a0067f503")
     json_data = json.loads(response.text)
     weather = json_data['weather']
-    print(f"current weather: {weather[0]['main']}")
-    print(f"current condition: {weather[0]['description']}")
+    curWeather = weather[0]['main']
+    curDesctiption = weather[0]['description']
+    if curWeather.lower() in snowing:
+        weatherCondition = "snow"
+    elif curWeather.lower() in clear:
+        weatherCondition = "clear"
+    elif curWeather.lower() in raining:
+        weatherCondition = "rain"
+
+    print(f"current weather: {curWeather.lower()}")
+    print(f"current condition: {curDesctiption.lower()}")
 
 
 def SocketIn():
@@ -112,6 +129,27 @@ def useInput():
             send(smsg)
             time.sleep(.3)
 
+def playVideo():
+    global connected
+    global weatherCondition
+    while connected:
+        if weatherCondition == "clear":
+            pass
+            
+        elif weatherCondition == "snow":
+            file = "/home/jeff/Videos/snow.mp4"
+            os.system("mplayer -fs  " + file)
+
+        elif weatherCondition == "rain":
+            pass
+        
+        elif weatherCondition == "fog":
+            pass
+
+        elif weatherCondition == "cloud":
+            pass
+
+        time.sleep(10)
 
 SockThread = threading.Thread(target=SocketIn, args=())
 SockThread.setDaemon(True)
@@ -121,11 +159,17 @@ inputThead = threading.Thread(target=useInput, args=())
 inputThead.setDaemon(True)
 inputThead.start()
 
+videoThread = threading.Thread(target=playVideo, args=())
+videoThread.setDaemon(True)
+videoThread.start()
+
 
 #todo input hangs up the DataIn var to be displayed
 while connected:
     # smsg = input("enter msg: \n")
     # smsg = '#'
-    time.sleep(30)
+    #todo input hangs up the DataIn var to be displayed - add state machine to 
+    #todo avoid using time.sleep
+    time.sleep(300)
     get_weather()
     # send(smsg)
